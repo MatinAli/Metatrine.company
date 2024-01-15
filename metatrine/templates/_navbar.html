@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load static %}
+{% block body_class %}hidden hidden-ball hero-below-caption smooth-scroll uppercase-text{% endblock %}
+{% block content %}
+<div class="cd-index cd-main-content">
+    
+    <!-- Page Content -->
+    <div id="page-content" class="dark-content" data-bgcolor="#eee">
+<header class="classic-menu invert-header" data-menucolor="#171717">
+    <div id="header-container">
+     
+    
+    <!-- Logo -->
+    <div id="logo" class="hide-ball">
+        <a class="ajax-link" data-type="page-transition" href="{% slugurl 'home' %}">
+            <img class="black-logo" src="{% static 'images/logo.png' %}" height="" width="" alt="Metatrine Logo"/>
+            <img class="white-logo" src="{% static 'images/logo-white.png' %}" height="" width="" alt="Metatrine Logo"/>
+        </a> 
+    </div>
+    <!--/Logo -->
+                
+    
+    <!-- Navigation -->
+    <nav> 
+        <div class="nav-height">
+            <div class="outer">
+                <div class="inner">           
+                    <ul data-breakpoint="1025" class="flexnav">
+                        <li class="link menu-timeline"><a class="active" href="{% slugurl 'home' %}"><div class="before-span"><span data-hover="Home">Home</span></div></a></li>
+                        <li class="link menu-timeline"><a class="ajax-link" href="{% slugurl 'portfolio' %}"><div class="before-span"><span data-hover="Portfolio">Portfolio</span></div></a></li>
+                        <li class="link menu-timeline"><a class="ajax-link" data-type="page-transition" href="{% slugurl 'about' %}"><div class="before-span"><span data-hover="About">About</span></div></a></li>
+                        <li class="link menu-timeline"><a class="ajax-link" data-type="page-transition" href="{% slugurl 'contact' %}"><div class="before-span"><span data-hover="Contact">Contact</span></div></a></li>
+                    </ul>             
+                </div>
+            </div> 
+        </div>          
+    </nav>
+    <!--/Navigation -->
+    
+    
+    <!-- Menu Burger -->
+    <div class="button-wrap right menu burger-lines">
+        <div class="icon-wrap parallax-wrap">
+            <div class="button-icon parallax-element">
+                <div id="burger-wrapper">
+                    <div id="menu-burger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="button-text sticky right"><span data-hover="Menu">Menu</span></div> 
+    </div>
+    <!--/Menu Burger -->
+
+    </div>
+</header>
+    </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+{% block body_class %}hidden hidden-ball hero-below-caption smooth-scroll uppercase-text{% endblock %}
+{% block content %}
+	<main>		
+        <!-- Preloader -->
+        {% include "preloader.html" %}
+        <!--/Preloader -->     
+        
+        <div class="cd-index cd-main-content">
+    
+        <!-- Page Content -->
+        <div id="page-content" class="dark-content" data-bgcolor="#eee">
+            
+            <!-- Header -->
+            {% include "_navbar.html" %}
+            <!--/Header -->
+            
+            
+            
+            <!-- Content Scroll -->
+            <div id="content-scroll">
+            
+            
+                <!-- Main -->
+                <div id="main">
+                
+                    <!-- Hero Section -->
+                    <div id="hero" class="has-image">
+                        <div id="hero-styles">
+                            <div id="hero-caption" class="content-full-width parallax-scroll-caption">
+                                <div class="inner">
+                                    <div class="hero-title-wrapper">
+                                        <h1 class="hero-title">
+                                        {% for block in page.hero_title %}
+                                            <span>{{ block.value }}</span>
+                                        {% endfor %}
+                                        </h1></div>                                    
+                                </div>
+                            </div>
+                            <div id="hero-footer">
+                            	<div class="hero-footer-left">
+                                	<div class="button-wrap right scroll-down">
+                                        <div class="icon-wrap parallax-wrap">
+                                            <div class="button-icon parallax-element">
+                                                <i class="arrow-icon-down"></i>
+                                            </div>
+                                        </div>
+                                        <div class="button-text sticky right"><span data-hover="Scroll to Explore">Scroll to Explore</span></div> 
+                                    </div>
+                                </div>
+                                <div class="hero-footer-right">
+                    				<div id="info-text">Over 10 Years of Experience</div>
+                                </div>
+                            </div>                                   
+                        </div>
+                    </div>
+                    <div id="hero-image-wrapper" class="change-header-color">
+                    	<div id="hero-background-layer" class="parallax-scroll-image">
+                            <div class="about-hero" id="hero-bg-image">
+                            </div>  
+                        </div>
+                    </div>                        
+                    <!--/Hero Section -->   
+                         
+                    
+                    <!-- Main Content -->
+                    <div id="main-content">
+                        <!-- Main Page Content -->
+                        <div id="main-page-content" class="content-full-width">
+                        
+                                
+                            <!-- Row -->
+                            <div class="content-row row_padding_top row_padding_left row_padding_right full light-section" data-bgcolor="#eee">
+                                
+                                <div class="one_third">
+                                    <h6 class="has-mask">/ 01</h6>
+                                </div>
+                                
+                                <div class="two_third last">
+                                    <h6 class="has-mask">/ Our Services</h6>
+                                </div>
+                                
+                                <hr><hr>
+                                
+                                <div class="one_third">
+                                {% for block in page.services_item %}
+                                    <h5 class="has-mask">{{ block.value }}</h5>
+                                {% endfor %}
+                                </div>
+                                
+                                <div class="two_third last">
+                                    <h4 class="has-mask">{{ page.services|safe }}</h4>
+                                </div>
+                            
+                            </div> 
+                            <!--/Row -->
+                                              <!-- Row -->
+                            <div class="content-row row_padding_left row_padding_right row_padding_bottom full light-section" data-bgcolor="#eee">
+                            
+                                <hr class="animated-line has-animation">
+                                
+                                <div class="one_third">
+                                    <h6 class="has-mask">/ 02</h6>
+                                </div>
+                                
+                                <div class="two_third last">
+                                    <h6 class="has-mask">/ Fun Facts</h6>
+                                </div>
+                                
+                                <hr><hr>
+                                
+                                <div class="one_third">
+                                    <h3 class="has-mask no-margins">Agency</h3>
+                                    <h3 class="has-mask no-margins">Snapshots</h3>
+                                </div>
+
+                            <div class="one_third">
+                                <h1 class="has-mask-fill">21</h1>
+                                <hr class="animated-line has-animation">
+                                <h6 class="has-mask">Projects Completed</h6>
+                                
+                                <hr><hr><hr>
+                                
+                                <h1 class="has-mask-fill">03</h1>
+                                <hr class="animated-line has-animation">
+                                <h6 class="has-mask">Years of Experience</h6>                                    
+                            </div>
+                            
+                            <div class="one_third last">
+                                <h1 class="has-mask-fill">07</h1>
+                                <hr class="animated-line has-animation">
+                                <h6 class="has-mask">Team Members</h6>
+                                
+                                <hr><hr><hr>
+                                
+                                <h1 class="has-mask-fill">04</h1>
+                                <hr class="animated-line has-animation">
+                                <h6 class="has-mask">Unity Network</h6>
+                            </div>
+                            </div> 
+                            <!--/Row -->
+                            
+                            
+                            <!-- Row -->
+                            <div class="content-row row_padding_bottom light-section" data-bgcolor="#eee">
+                                
+                                <div class="title-moving-outer">
+                                    <h1 class="big-title1 title-moving-forward">{{ page.big_title }}</h1>
+                                </div>
+                                
+                                <div class="title-moving-outer">
+                                    <h1 class="big-title1 title-moving-backward">{{ page.big_title }}</h1>
+                                </div>
+                                
+                            </div> 
+                            <!--/Row -->
+                            
+                            <!-- Row -->
+                            <div class="content-row row_padding_left row_padding_right row_padding_bottom full light-section" data-bgcolor="#eee">
+                                
+                                <div class="one_third">
+                                    <h6 class="has-mask">/ 03</h6>
+                                </div>
+                                
+                                <div class="two_third last">
+                                    <h6 class="has-mask">/ Expertise</h6>
+                                </div>
+                                
+                                <hr><hr>
+                                
+                                <div class="one_third">
+                                    <h3 class="has-mask no-margins">Overview</h3>
+                                </div>
+                                
+                                <div class="two_third last">
+                                    <dl class="accordion has-animation">
+                                    {% for item in page.faq.all %}
+                                        <dt>
+                                            <span class="link"><div>
+                                                {{ item.overview_title }}
+                                            </div></span>
+                                            <div class="acc-icon-wrap parallax-wrap">
+                                                <div class="acc-button-icon parallax-element">
+                                                    <i class="fa fa-arrow-right"></i>
+                                                </div>
+                                            </div>
+                                        </dt>
+                                        <dd class="accordion-content">                                            
+                                            {{ item.overview_detail }}
+                                        </dd>
+                                        {% endfor %}                                        
+                                    </dl>
+                                    
+                                </div>
+                                
+                            </div> 
+                            <!--/Row -->
+                            
+                            
+                            <!-- Row -->
+                            <div class="content-row row_padding_top row_padding_bottom full dark-section change-header-color" data-bgcolor="#222">
+                                    
+                                <ul class="clients-table has-animation no-borders" data-delay="0">  
+                                {% for item in page.customers.all %}                                             
+                                    <li class="link">
+                                        <a target="_blank" href="{{ client.link }}">
+                                        {% with item.image as client_image %}
+                                        {% if client_image %}
+                                        {% image  client_image original %}
+                                        {% endif %}
+                                        {% endwith %}
+                                        </a>
+                                    </li>
+                                    {% endfor %}                       
+                                </ul>
+                                
+                            </div> 
+                            <!--/Row -->
+                        
+                            
+                            <!-- Row -->
+                            <div class="content-row row_padding_top row_padding_left row_padding_right full light-section" data-bgcolor="#eee">
+                                
+                                <hr>
+                                
+                                <h1 class="text-align-center">{{ page.content_row }}</h1>
+                                
+                                <hr><hr> 
+                                
+                                <div class="one_half"></div>
+                                
+                                <div class="one_half last">
+                                {% for item in page.business_insight.all %}
+                                    <h5 class="has-mask-fill">{{ item.title|richtext }}</h5>
+                                    <p class="has-animation" data-delay="0">{{ item.body|richtext }}</p>
+                                    <hr>
+                                {% endfor %}
+                                </div>
+                            </div> 
+                            <!--/Row -->
+                            
+                        
+                        </div>
+                        <!--/Main Page Content -->
+                        
+                        
+                        <!-- Page Navigation --> 
+                        <div id="page-nav">
+                            <div class="page-nav-wrap">
+                                <div class="page-nav-caption content-full-width block-title marquee-title">                                 
+                                    <div class="inner">                                        
+                                        <a class="page-title next-ajax-link-page" data-type="page-transition" data-firstline="Next" data-secondline="Page" href="{% slugurl 'contact' %}">                                            
+                                            <div class="next-hero-title-wrapper"><div class="next-hero-title"><span>Get in Touch Get in Touch</span></div></div>
+                                        </a>
+                                        <div class="next-hero-subtitle-wrapper"><div class="next-hero-subtitle">
+                                        	<span>We would love to hear from you.</span>
+                                            <span>Let’s work together</span>
+                                        </div></div>
+                                    </div>               
+                                </div>
+                            </div>
+                        </div>      
+                        <!--/Page Navigation -->
+                        
+                                
+                    </div>
+                    <!--/Main Content --> 
+                
+                </div>
+                <!--/Main -->
+                
+                <!-- Footer -->
+                {% include "footer.html" %}
+                <!--/Footer -->
+            
+        
+        	</div>
+            <!--/Content Scroll -->
+            
+            
+            <div id="app"></div>
+            
+            
+		</div>    
+        <!--/Page Content -->
+    
+		</div>
+	</main>
+    
+    
+    
+    
+    <div class="cd-cover-layer"></div>
+    <div id="magic-cursor">
+        <div id="ball">
+        	<div id="ball-drag-x"></div>
+            <div id="ball-drag-y"></div>
+        	<div id="ball-loader"></div>
+        </div>
+    </div>
+    <div id="clone-image">
+    	<div class="hero-translate"></div>
+    </div>
+    <div id="rotate-device"></div>
+    {% block extra_js %}
+    {% endblock %}
+{% endblock content %}

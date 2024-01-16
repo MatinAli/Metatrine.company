@@ -124,7 +124,7 @@ DATABASES = {
 
         'PASSWORD': 'WodCQk~f$z(U-{k',
 
-        'HOST': 'metatrine-database.c1iok0oywft2.eu-north-1.rds.amazonaws.com',
+        'HOST': 'metatrine-db.c1iok0oywft2.eu-north-1.rds.amazonaws.com',
 
         'PORT': '5432',
 
@@ -205,11 +205,11 @@ WAGTAILSEARCH_BACKENDS = {
 WAGTAILADMIN_BASE_URL = "http://example.com"
 
 
-AWS_ACCESS_KEY_ID = 'AKIAZ5MZLT2IZKAMI24D'
-AWS_SECRET_ACCESS_KEY = 'z3eAEk9O7Wf/bpRenQOrcZvk3X7loCOP8jd8Odct'
+AWS_ACCESS_KEY_ID = 'AKIAZ5MZLT2I7QBHCFF2'
+AWS_SECRET_ACCESS_KEY = 'jh4qpWst92q5XB+2D/2q38KrciJz/ESL30b+92P3 '
 AWS_STORAGE_BUCKET_NAME = 'metatrine'
 AWS_S3_SIGNATURE_NAME = 's3v4',
-AWS_S3_REGION_NAME = 'eu-north-1	'
+AWS_S3_REGION_NAME = 'eu-north-1'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL =  None
 AWS_S3_VERITY = True

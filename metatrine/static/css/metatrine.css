@@ -914,7 +914,8 @@ Primary use:	Showcase Portfolio
 		top:0;
 		left:0;
 		background-color:#0f1010;
-		background-image:url(images/rotate.png);
+		/* I comment this because of aws value error */
+		/* background-image:url(images/rotate.png); */
 		background-size:100px 100px;
 		background-position:center;
 		background-repeat:no-repeat;

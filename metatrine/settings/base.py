@@ -85,6 +85,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "metatrine.wsgi.application"
 
+# This configures the default primary key to use BigAutoField instead of the default AutoField.
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -196,11 +198,11 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "http://example.com"
+WAGTAILADMIN_BASE_URL = "https://metatrine.com"
 
 
-AWS_ACCESS_KEY_ID = 'AKIAZ5MZLT2I7QBHCFF2'
-AWS_SECRET_ACCESS_KEY = 'jh4qpWst92q5XB+2D/2q38KrciJz/ESL30b+92P3 '
+AWS_ACCESS_KEY_ID = 'AKIAZ5MZLT2ITBWZXIET'
+AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'metatrine'
 AWS_S3_SIGNATURE_NAME = 's3v4',
 AWS_S3_REGION_NAME = 'eu-north-1'

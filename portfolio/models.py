@@ -6,7 +6,7 @@ from django.apps import apps
 from django.db.models import Count
 # From wagtail
 from wagtail.models import Page, Orderable, Page
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel, InlinePanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel, InlinePanel, MultipleChooserPanel
 from wagtail.fields import RichTextField, StreamField
 from wagtail.snippets.models import register_snippet
 from wagtail import blocks
@@ -110,7 +110,11 @@ class PortfolioPage(Page):
         FieldPanel('introduction'),
         FieldPanel('body'),
         FieldPanel('project_link'),
-        InlinePanel('portfolio_gallery', label="Portfolio Gallery"),
+        MultipleChooserPanel(
+            'portfolio_gallery',
+            label = 'portfolio gallery',
+            chooser_field_name= 'image'
+            ),
     ] 
 
  # Portfolio Projects Gallery  

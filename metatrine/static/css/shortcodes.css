@@ -1079,7 +1079,8 @@
 		position: relative;
 		width:100%;
 		-webkit-text-fill-color: rgba(0,0,0,0.1);
-		background-clip: text;
+		-webkit-background-clip: text;
+		background-clip : text;
 		background-repeat: no-repeat;
 		background-image: linear-gradient(#222, #222);
   		background-size: 0% 100%;

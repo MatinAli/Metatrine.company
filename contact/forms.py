@@ -14,7 +14,7 @@ class ContactForm(forms.Form):
 
     email = forms.EmailField(max_length= 100,widget=forms.TextInput(attrs={ 
         'name': 'email',
-        'type' : 'text'
+        'type' : 'text',
         'id': 'email',
         'placeholder': 'Your Email',
         'class': 'textarea_class',

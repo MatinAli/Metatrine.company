@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags %}
+{% block content %}
+    <!-- Sidebar -->
+    <div id="black-fade"></div>
+    <div id="sidebar">
+        <div id="open-sidebar" class="link">
+            <i class="fa-solid fa-arrow-left"></i>
+        </div>
+        <div id="scrollbar"></div>
+        <div class="sidebar-content">
+            <div id="block-2"
+                 class="widget clapat-sidebar-widget widget_block widget_search">
+                <form role="search"
+                      method="get"
+                      action="{% url 'search' %}"
+                      class="wp-block-search__button-outside wp-block-search__text-button wp-block-search">
+                    <label class="wp-block-search__label" for="wp-block-search__input-1">Search</label>
+                    <div class="wp-block-search__inside-wrapper ">
+                        <input class="wp-block-search__input"
+                               id="wp-block-search__input-1"
+                               placeholder=""
+                               {% if search_query %}
+                               value="{{ search_query }}"
+                               {% endif %}
+                               type="search"
+                               name="s"
+                               required />
+                        <button aria-label="Search"
+                                class="wp-block-search__button wp-element-button"
+                                type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div id="block-3" class="widget clapat-sidebar-widget widget_block">
+                <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+                    <div class="wp-block-group__inner-container">
+                        <h5 class="wp-block-heading">Recent Posts</h5>
+                        <ul class="wp-block-latest-posts__list wp-block-latest-posts">
+                        {% for recent_post in recent_posts %}
+                            <li>
+                                <a class="wp-block-latest-posts__post-title"
+                                   href="{% pageurl recent_post %}">{{ recent_post.post_title }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="block-4" class="widget clapat-sidebar-widget widget_block">
+                <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+                    <div class="wp-block-group__inner-container">
+                        <h5 class="wp-block-heading">Recent Comments</h5>
+                        <div class="no-comments wp-block-latest-comments">No comments to show.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/Sidebar -->
+{% endblock content %}

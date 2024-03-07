@@ -587,6 +587,10 @@
 		height:auto;
 	}
 	
+	.parallax-grid .filters-active .item {
+		margin-bottom: 80px!important;
+	}
+	
 	.parallax-grid .item::after {
 		content: "";
 		display: block;
@@ -653,6 +657,10 @@
 		margin-bottom:100px;
 	}
 	
+	.parallax-grid .filters-active .item-parallax {
+		transform: none!important;
+	}
+	
 	/* -- Item Components -- */	
 	
 	.item-parallax {
@@ -661,6 +669,7 @@
 		position: absolute;
 		pointer-events:initial;
 	}
+	
 	
 	.item-appear {
 		display: block;
@@ -758,7 +767,7 @@
 	
 	.item-image {
 		width:100%;
-		height: 100%;
+		height: 100%!important;
 		position:relative;
 		display:block;
 		z-index:100;	
@@ -823,11 +832,16 @@
 	}
 	
 	.item-title span {
-		display: block;
+		display: inline-block;
 		margin: 0;
 		min-width: 10px;
 		width:auto;
 		box-sizing: border-box;
+		margin-right: 0.4rem;
+	}
+	
+	.item-title span:last-child {
+		margin-right: 0;
 	}
 	
 	.item-cat {
@@ -1119,6 +1133,24 @@
 	
 	.flex-grid  {
 		padding: 0 30px;
+	}
+	
+	.flex-grid .portfolio  {
+		flex-wrap: wrap;
+	}	
+	
+	.flex-grid .item {
+		width: calc(50% - 20px);
+		margin:0px 10px;
+		margin-bottom: 80px;
+	}
+	
+	.flex-grid .item:hover {
+		width:calc(50% - 20px);
+	}
+	
+	.flex-grid .item .item-title, .flex-grid .item .item-cat {
+  		opacity: 1 !important;
 	}
 	
 	/* -- Metro Grid -- */
@@ -1510,7 +1542,14 @@
 	}
 	
 	.flex-grid .item {
-		margin:0px 5px;
+		width:100%;
+		height: 64vw;
+		margin:0px;
+		margin-bottom:80px;
+	}
+	
+	.flex-grid .item:hover {
+		width:100%;
 	}
 	
 	/* -- Metro Grid -- */

@@ -1,38 +1,157 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags %}
-
-{% block body_class %}template-searchresults{% endblock %}
-
-{% block title %}Search{% endblock %}
-
+{% load static i18n wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
 {% block content %}
-<h1>Search</h1>
+<main>
+    <!-- Preloader -->
+    {% include "preloader.html" %}
+    <!--/Preloader -->
+    <!--Cd-main-content -->
+    <div class="cd-index cd-main-content">
+        <!-- Page Content -->
+        <div id="page-content" class="post-template-content light-content" data-bgcolor="#171717">
+            <!-- Header -->
+            {% include "_navbar.html" %}
+            <!--/Header -->
+   <!-- Sidebar -->
+            {% include "_sidebar.html" %}
+    <!--/Sidebar -->
+            <div id="content-scroll">
+                <!-- Main -->
+                <div id="main">
+                    <!-- Hero Section -->
+                    <div id="hero">
+                        <div id="hero-styles">
+                            <div id="hero-caption"
+                                class="content-full-width content-full-width text-align-left block-title parallax-scroll-caption">
+                                <div class="inner">
+                                    <div class="hero-title-wrapper">
+                                        <h1 class="hero-title"><span>Search For: {{ search_query }}</span></h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="hero-footer">
+                                <div class="hero-footer-left">
+                                    <div class="button-wrap right scroll-down">
+                                        <div class="icon-wrap parallax-wrap">
+                                            <div class="button-icon parallax-element">
+                                                <i class="arrow-icon-down"></i>
+                                            </div>
+                                        </div>
+                                        <div class="button-text sticky right">
+                                            <span data-hover="Scroll To Explore">Scroll To Explore</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hero-footer-right">
+                                {% if search_results %}
+                                    <div id="info-text">Posts ({{ search_results|length }})</div>
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Hero Section -->
+                    <!-- Main Content -->
+                    <div id="main-content">
+                        <!-- Blog-->
+                        {% if search_results %}
+                        <div id="blog-page-content">
+                            <!-- Blog-Content-->
+                            <div id="blog-effects" class="content-full-width" data-fx="1">
+                                <!-- Article -->
+                                {% for result in search_results %}
 
-<form action="{% url 'search' %}" method="get">
-    <input type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-    <input type="submit" value="Search" class="button">
-</form>
-
-{% if search_results %}
-<ul>
-    {% for result in search_results %}
-    <li>
-        <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
-        {% if result.search_description %}
-        {{ result.search_description }}
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-
-{% if search_results.has_previous %}
-<a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
-{% endif %}
-
-{% if search_results.has_next %}
-<a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
-{% endif %}
-{% elif search_query %}
-No results found
-{% endif %}
-{% endblock %}
+                                <article  class="post type-post status-publish format-standard has-post-thumbnail hentry">
+                                    <div class="article-wrap">
+                                        <div class="hover-reveal">
+                                            <div class="hover-reveal__inner">
+                                                <div class="hover-reveal__img">
+                                                    <a class="ajax-link" href="{% pageurl result %}" data-type="page-transition">
+                                                    {% with result.main_image as main_image}
+                                                    {% if main_image %}
+                                                        {% image main_image orginal alt="{{ main_image.caption }}" }
+                                                    {% endif %}
+                                                    {% endwith %}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a class="post-title ajax-link has-mask-fill" href="{% pageurl result %}" data-type="page-transition">{{ result.post_title }}</a>
+                                    </div>
+                                    <div class="article-content">
+                                        <div class="entry-meta-wrap">
+                                            <div class="entry-meta entry-categories">
+                                                <ul class="post-categories">
+                                                {% for category in post.categories %}
+                                                    <li class="link">
+                                                        <a class="ajax-link" data-type="page-transition" href="{% url 'blog_category' category.slug %}">
+                                                            rel="category tag"><span
+                                                                data-hover="{{ category.name }}">{{ category.name }}</span></a>
+                                                    </li>
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="entry-meta-wrap">
+                                            <ul class="entry-meta entry-date">
+                                                <li class="link">
+                                                    <a class="ajax-link" href="{% pageurl result %}"><span
+                                                            data-hover="{{ result.pub_date }}">{{ result.pub_date }}</span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="article-links">
+                                        <div class="button-box">
+                                            <a class="ajax-link" data-type="page-transition" href="{% pageurl result %}">
+                                                <div class="clapat-button-wrap parallax-wrap hide-ball">
+                                                    <div class="clapat-button parallax-element">
+                                                        <div
+                                                            class="button-border outline rounded parallax-element-second">
+                                                            <span data-hover="Read More">Read More</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="page-links"></div>
+                                    </div>
+                                </article>
+                                {% endfor %}
+                                {% elif search_query %}
+                                <h4 style="text-align:center">No Results Found</h4>
+                                <!--/Article -->
+                            </div>
+                            <!-- /Blog-Content -->
+                        </div>
+                        {% endif %}
+                        <!-- /Blog-->
+                    </div>
+                    <!--/Main Content-->
+                    <!-- /Main -->
+                </div>
+                <!-- Footer -->
+                {% include "footer.html" %}
+                <!--/Footer -->
+            </div>
+            <div id="app"></div>
+        </div>
+        <!--/Page Content -->
+    </div>
+    <!--/Cd-main-content -->
+</main>
+<!--/Main -->
+<div class="cd-cover-layer"></div>
+<div id="magic-cursor">
+    <div id="ball">
+        <div id="ball-drag-x"></div>
+        <div id="ball-drag-y"></div>
+        <div id="ball-loader"></div>
+    </div>
+</div>
+<div id="clone-image">
+    <div class="hero-translate"></div>
+</div>
+<div id="rotate-device"></div>
+{% block extra_js %}{% endblock %}
+{% endblock content %}

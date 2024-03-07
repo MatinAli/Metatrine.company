@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+{% block content %}
+    <main>
+        <!-- Preloader -->
+        {% include "preloader.html" %}
+        <!--/Preloader -->
+        <!--Cd-main-content -->
+        <div class="cd-index cd-main-content">
+            <!-- Page Content -->
+            <div id="page-content"
+                 class="post-template-content light-content "
+                 data-bgcolor="#171717">
+                <!-- Header -->
+                {% include "_navbar.html" %}
+                <!--/Header -->
+                <!-- Sidebar -->
+                {% include "sidebar.html" %}
+                <!--/Sidebar -->
+                <div id="content-scroll">
+                    <!-- Main -->
+                    <div id="main">
+                        <!-- Hero Section -->
+                        <div id="hero">
+                            <div id="hero-styles">
+                                <div id="hero-caption"
+                                     class="content-max-width inline-title text-align-left">
+                                    <div class="inner">
+                                        <ul class="entry-meta entry-date">
+                                            <li class="link">
+                                                <a href="{% pageurl page %}"><span data-hover="{{ page.pub_date|date:'M j,Y' }}">{{ page.pub_date|date:'M j,Y' }}</span></a>
+                                            </li>
+                                        </ul>
+                                        <h1 class="hero-title">
+                                            <span>{{ page.post_title }}s</span>
+                                        </h1>
+                                        <div class="entry-meta entry-categories">
+                                            <ul class="post-categories">
+                                            {% for category in categories %}
+                                                <li class="link">
+                                                    <a class="ajax-link"
+                                                       data-type="page-transition"
+                                                       href="{% url 'blog_category' category.slug %}"
+                                                       rel="category tag"><span data-hover="{{ category.name }}">{{ category.name }}</span></a>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/Hero Section -->
+                        <!-- Main Content -->
+                        <div id="main-content">
+                            <!-- Post -->
+                            <div id="blog-post-content">
+                                <div id="post-image">
+                                {% with page.main_image as main_image %}
+                                {% if main_image %}
+                                    {% image main_image original alt="{{ main_image.caption }}"}
+                                {% endif %}
+                                {% endwith %}         
+                                </div>
+                                <!-- Post Content -->
+                                <div id="post-content">
+                                    <div class="post-max-width">
+                                        <h4 class="wp-block-heading">{{ page.main_header }}</h4>
+
+                                        {{ page.body|richtext }}
+                                        
+                                        <blockquote class="wp-block-quote">
+                                            <p>
+                                                Nulla facilisi. Vestibulum
+                                                pretium, dui eu aliquam faucibus, est dui hendrerit nulla, mattis semper
+                                                turpis mauris eget tellus. Nulla accumsan rutrum nibh, sed eleifend
+                                                felis blandit.
+                                            </p>
+                                        </blockquote>
+                                        <div class="page-links"></div>
+                                    </div>
+                                </div>
+                                <!--/Post Content -->
+                                <!-- Post Meta Data -->
+                                <div id="post-meta-data">
+                                    <div class="post-max-width">
+                                        <ul class="entry-meta entry-tags">
+                                            <li>Tags:</li>
+                                            {% with tags=page.tags.all %}
+                                            {% if tags %}
+                                            {% for tag in tags %}
+                                            <li class="link">
+                                                <a class="ajax-link"
+                                                   data-type="page-transition"
+                                                   href="{% slugurl 'tags' %}?tags={{ tag }}"
+                                                   rel="category tag"><span data-hover="{{ tag }}">{{ tag }}</span></a>
+                                            </li>
+                                            {% endfor %}
+                                            {% endif %}
+                                            {% endwith %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--/Post Meta Data -->
+
+                                <!-- Post Navigation -->
+                                <div id="post-navigation">
+                                    <div class="post-max-width">
+                                        <div class="post-prev disabled">
+                                            <div class="post-prev-caption">Prev</div>
+                                            <div class="post-next-title">
+                                            {% if page.prev_post %}
+                                                <a href="{{ page.prev_post }}"
+                                                   class="ajax-link hide-ball"
+                                                   data-type="page-transition"><span>Desert
+                                                Treasure Hunt</span></a>
+                                            {% else %}
+                                                <span>No more posts</span>
+                                            {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <div class="post-next">
+                                            <div class="post-next-caption">Next</div>
+                                            <div class="post-next-title">
+                                            {% if page.next_post %}
+                                                <a href="{{ page.next_post }}"
+                                                   class="ajax-link hide-ball"
+                                                   data-type="page-transition"><span>Desert
+                                                Treasure Hunt</span></a>
+                                            {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/Post Navigation -->
+
+                                <!-- Article Discusion -->
+                                <div id="post-comments">
+                                    <div class="post-max-width">
+                                        <div id="comments">
+                                            <div class="article-head">
+                                                <ul class="entry-meta">
+                                                    <li>No Comments</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Article Discusion -->
+
+                                <!-- Post Comments Formular -->
+                                <div id="post-form">
+                                    <div id="respond" class="comment-respond">
+                                        <div id="reply-title" class="comment-reply-title">
+                                            <div class="article-head">
+                                                <ul class="entry-meta">
+                                                    <li>Leave a comment</li>
+                                                </ul>
+                                            </div>
+                                            <small><a rel="nofollow"
+   id="cancel-comment-reply-link"
+   href="/wordpress/harington/2022/03/14/blue-ocean-waves/#respond"
+   style="display:none"><span class="cancel-reply">Cancel
+                                            Reply</span></a></small>
+                                        </div>
+
+                                        {% comment %} Blog Page Contact Form {% endcomment %}
+                                        <form action="" method="post" id="commentsform" class="comment-form">
+                                            <div class="message-box hide-ball ">
+                                                <textarea id="comment"
+                                                          name="comment"
+                                                          onfocus="#" 
+                                                          onblur="#">Comment</textarea>
+                                                <label class="input_label slow"></label> 
+                                            </div>
+                                            <div class="name-box hide-ball">
+                                                <input name="author"
+                                                       type="text"
+                                                       id="author"
+                                                       size="30"
+                                                       onfocus="#"
+                                                       onblur="#"
+                                                       value='Name'>
+                                                <label class="input_label"></label>
+                                            </div>
+                                            <div class="email-box hide-ball">
+                                                <input name="email"
+                                                       type="text"
+                                                       id="email"
+                                                       size="30"
+                                                       onfocus="#"
+                                                       onblur="#"
+                                                       value='E-mail'>
+                                                <label class="input_label"></label>
+                                            </div>
+                                            <p class="comment-form-cookies-consent">
+                                                <input id="wp-comment-cookies-consent"
+                                                       name="wp-comment-cookies-consent"
+                                                       type="checkbox"
+                                                       value="yes" />
+                                                <label for="wp-comment-cookies-consent">
+                                                    Save my name, email, and website in
+                                                    this browser for the next time I comment.
+                                                </label>
+                                            </p>
+                                            <div class="form-submit">
+                                                <div class="button-box">
+                                                    <div class="clapat-button-wrap parallax-wrap hide-ball">
+                                                        <div class="clapat-button parallax-element">
+                                                            <div class="button-border outline rounded parallax-element-second">
+                                                                <input name="submit"
+                                                                       type="submit"
+                                                                       id="submit"
+                                                                       class="submit"
+                                                                       value="Post Comment" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type='hidden'
+                                                       name='comment_post_ID'
+                                                       value='2559'
+                                                       id='comment_post_ID' />
+                                                <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- #respond -->
+                                </div>
+                                <!-- /Post Comments Formular -->
+                            </div>
+                            <!-- /Post -->
+                        </div>
+                        <!-- /Main Content -->
+                    </div>
+                    <!-- /Main -->
+                    <!-- Footer -->
+                    {% include "footer.html" %}
+                    <!--/Footer -->
+                </div>
+                <div id="app"></div>
+            </div>
+            <!--/Page Content -->
+        </div>
+        <!--/Cd-main-content -->
+    </main>
+    <!--/Main -->
+    <div class="cd-cover-layer"></div>
+    <div id="magic-cursor">
+        <div id="ball">
+            <div id="ball-drag-x"></div>
+            <div id="ball-drag-y"></div>
+            <div id="ball-loader"></div>
+        </div>
+    </div>
+    <div id="clone-image">
+        <div class="hero-translate"></div>
+    </div>
+    <div id="rotate-device"></div>
+    {% block extra_js %}{% endblock %}
+{% endblock content %}

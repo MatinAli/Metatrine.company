@@ -24,9 +24,10 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
-    "home",    
-    "about",    
+    "about",
+    "blog",
     "contact",    
+    "home",    
     "portfolio",     
     "search",
     "wagtail.contrib.forms",

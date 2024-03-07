@@ -1,59 +1,38 @@
-/*--------------------------------------------------
-Function Contact Formular
----------------------------------------------------*/	
-		
-	function ContactForm() {	
-	
-		if( $('#contact-formular').length > 0 ){
-			
-			$('#contactform').submit(function(){
-				var action = $(this).attr('action');
-				$("#message").slideUp(750,function() {
-					$('#message').hide();
-					$('#submit').attr('disabled','disabled');		
-					$.post(action, {
-						name: $('#name').val(),
-						email: $('#email').val(),
-						comments: $('#comments').val(),
-						verify: $('#verify').val()
-					},
-					function(data){
-						document.getElementById('message').innerHTML = data;
-						$('#message').slideDown('slow');
-						$('#contactform img.loader').fadeOut('slow',function(){$(this).remove()});
-						$('#submit').removeAttr('disabled');
-						if(data.match('success') != null) $('#contactform').slideUp('slow');		
-					}
-				);		
-				});		
-				return false;		
-			});		
-		}
-		
-
-	}//End ContactForm	
-
+jQuery(function ($) {
 
 /*--------------------------------------------------
-Function Contact Map
----------------------------------------------------*/	
-		
-	function ContactMap() {	
-	
-		if( jQuery('#map_canvas').length > 0 ){					
-			var latlng = new google.maps.LatLng(43.270441,6.640888);
-			var settings = {
-				zoom: 14,
-				center: new google.maps.LatLng(43.270441,6.640888),
-				mapTypeControl: false,
-				scrollwheel: false,
-				draggable: true,
-				panControl:false,
-				scaleControl: false,
-				zoomControl: false,
-				streetViewControl:false,
-				navigationControl: false};			
-				var newstyle = [
+	Function Contact Map & Init Contact Map
+---------------------------------------------------*/
+	window.ContactMap = function() {
+
+		if( $('#map_canvas').length > 0 ){
+
+			var map_marker_image 	= 'images/marker.png';
+			var map_address 		= 'New York City'
+			var map_zoom			= 16;
+			var marker_title 		= 'Hello Friend!';
+			var marker_text			= 'Here we are. Come to drink a coffee!';
+			var map_type			= google.maps.MapTypeId.SATELLITE;
+
+			if( typeof ClapatMapOptions != 'undefined' ){
+
+				map_marker_image 	= ClapatMapOptions.map_marker_image;
+				map_address 		= ClapatMapOptions.map_address;
+				map_zoom			= Number(ClapatMapOptions.map_zoom);
+				marker_title 		= ClapatMapOptions.marker_title;
+				marker_text			= ClapatMapOptions.marker_text;
+				if( ClapatMapOptions.map_type == 0 ){
+
+					map_type = google.maps.MapTypeId.SATELLITE;
+				}
+				else{
+
+					map_type = google.maps.MapTypeId.ROADMAP;
+				}
+
+			}
+
+			var newstyle = [
 				{
 					"featureType": "all",
 					"elementType": "labels.text.fill",
@@ -220,51 +199,103 @@ Function Contact Map
 					]
 				}
 			];
-			var mapOptions = {
-				styles: newstyle,
-				mapTypeControlOptions: {
-					 mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'holver']
-				}
+
+			var settings = {
+				zoom: map_zoom,
+				center: new google.maps.LatLng(43.270441,6.640888),
+				mapTypeControl: false,
+				scrollwheel: false,
+				draggable: true,
+				panControl:false,
+				scaleControl: false,
+				zoomControl: false,
+				streetViewControl:false,
+				navigationControl: false,
+				mapTypeId: map_type,
+				styles: newstyle
 			};
-			var map = new google.maps.Map(document.getElementById("map_canvas"), settings);	
-			var mapType = new google.maps.StyledMapType(newstyle, { name:"Grayscale" });    
-				map.mapTypes.set('holver', mapType);
-				map.setMapTypeId('holver');
-						
-			
+
+
+			var map = new google.maps.Map(document.getElementById("map_canvas"), settings);
 			google.maps.event.addDomListener(window, "resize", function() {
 				var center = map.getCenter();
 				google.maps.event.trigger(map, "resize");
 				map.setCenter(center);
-			});	
+			});
 			var contentString = '<div id="content-map-marker" style="text-align:center; padding-top:10px; padding-left:10px">'+
 				'<div id="siteNotice">'+
 				'</div>'+
-				'<h4 id="firstHeading" class="firstHeading" style="color:#000!important; font-weight:600; margin-bottom:0px;">Hello Friend!</h4>'+
+				'<h4 id="firstHeading" class="firstHeading" style="color:#000!important; font-weight:600; margin-bottom:0px;"><strong style="color:#000!important;">' + marker_title + '</strong></h4>'+
 				'<div id="bodyContent">'+
-				'<p color:#999; font-size:14px; margin-bottom:10px">Here we are. Come to drink a coffee!</p>'+
+				'<p color:#999; font-size:14px; margin-bottom:10px">' + marker_text + '</p>'+
 				'</div>'+
 				'</div>';
 			var infowindow = new google.maps.InfoWindow({
 				content: contentString
-			});	
-			var companyImage = new google.maps.MarkerImage('images/marker.png',
-				new google.maps.Size(58,63), //Width and height of the marker
+			});
+			var companyImage = new google.maps.MarkerImage(map_marker_image,
+				new google.maps.Size(58,63),
 				new google.maps.Point(0,0),
-				new google.maps.Point(35,20) //Position of the marker
+				new google.maps.Point(35,20)
 			);
-			var companyPos = new google.maps.LatLng(-34.397,150.644);	
-			var companyMarker = new google.maps.Marker({
-				position: companyPos,
-				map: map,
-				icon: companyImage,               
-				title:"Our Office",
-				zIndex: 3});	
-			google.maps.event.addListener(companyMarker, 'click', function() {
-				infowindow.open(map,companyMarker);
-			});	
+
+			var latitude = 43.270441;
+			var longitude = 6.640888;
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({'address':map_address}, function(results, status) {
+				if(status == google.maps.GeocoderStatus.OK) {
+
+					map.setCenter(results[0].geometry.location);
+
+					latitude = results[0].geometry.location.lat();
+					longitude = results[0].geometry.location.lng();
+
+					var companyPos = new google.maps.LatLng(latitude, longitude);
+					var companyMarker = new google.maps.Marker({
+										position: companyPos,
+										map: map,
+										icon: companyImage,
+										title:"Our Office",
+										zIndex: 3});
+									google.maps.event.addListener(companyMarker, 'click', function() {
+										infowindow.open(map,companyMarker);
+									});
+				}
+			});
+
 		}
-		
+
 		return false
+
+	} // End ContactMap
+
+	window.InitContactMap = function() {
+
+		if( $('#map_canvas').length > 0 ){
+
+			if (typeof google != 'undefined' && typeof google.maps != 'undefined'){
+
+				// google maps already loaded, call the function which draws the map
+				ContactMap();
+
+			} else {
+
+				var map_api_key = '';
+				if( typeof ClapatMapOptions != 'undefined' ){
+					map_api_key = 'key=' + ClapatMapOptions.map_api_key;
+				}
+				var script = document.createElement('script');
+				script.type = 'text/javascript';
+				script.src = 'https://maps.googleapis.com/maps/api/js?' + map_api_key +
+							'&callback=ContactMap';
+				document.body.appendChild(script);
+			}
+
+		}
+	} // End InitContactMap
 	
-	}//End ContactMap
+});
+	
+	// Export functions to scripts
+	var ContactMap = window.ContactMap;
+	var InitContactMap = window.InitContactMap;

@@ -2,7 +2,6 @@
 {% load wagtailcore_tags %}
 {% include page.information %}
 {% load static %}
-{% block body_class %}hidden hidden-ball hero-below-caption smooth-scroll uppercase-text{% endblock %}
 {% block content %}
 	<main>		
         <!-- Preloader -->
@@ -76,6 +75,7 @@
                             
                             
                             <!-- Row -->
+                            <!-- Contact Form-->
                             <div class="content-row row_padding_top row_padding_left row_padding_right row_padding_bottom full light-section" data-bgcolor="#eee">
                                 
                                 <div class="one_third">
@@ -83,7 +83,7 @@
                                 </div>
                                 
                                 <div class="two_third last">
-                                	<h6 class="has-mask">Drop us a line</h6>    
+                                    <h6 class="has-mask">Drop us a line</h6>    
                                 </div>
                                                                 
                                 <hr><hr>
@@ -93,21 +93,40 @@
                                 </div>
                                 
                                 <div class="two_third last">
-                                	<!-- Contact Formular -->
+                                    <!-- Contact Formular -->
+                            
                                     <div id="contact-formular">
                                     
                                         <div id="message"></div>
-                                    
                                         <form method="post" action="{% pageurl page %}" name="contactform" id="contactform">
-                                            <div class="name-box has-animation" data-delay="100">        
-                                                <input name="name" type="text" id="name" size="30" value="" placeholder="What's Your Name"><label class="input_label"></label>
-                                            </div>                                                        
-                                            <div class="email-box has-animation" data-delay="150">
-                                                <input name="email" type="text" id="email" size="30" value="" placeholder="Your Email"><label class="input_label"></label>
-                                            </div>                            
+                                            {% for field in form.visible_fields %}
+                                            {% csrf_token %} 
+                                            {% if field.field.widget.input_type %}
+                                            <div class="{% if field.name == 'name' %} 
+                                                        name-box
+                                                        {% else %}
+                                                        email-box
+                                                        {% endif %}
+                                                        has-animation" data-delay="100">
+                                                <input name="{{field.name}}"
+                                                    type="{{field.field.widget.input_type}}" 
+                                                    id="{{field.label}}" size="30"
+                                                    placeholder="{{field.help_text}}"
+                                                    {% if field.field.required %}required="required"{% endif %}>
+                                                    <label class="input_label"></label>
+                                            </div>            
+                                            {% else %}
                                             <div class="message-box has-animation" data-delay="100">
-                                                <textarea name="comments" cols="40" rows="4" id="comments" placeholder="Tell Us About Your Project" ></textarea><label class="input_label slow"></label>
+                                                <textarea name="{{field.name}}"
+                                                    cols="40" rows="4" 
+                                                    id="{{field.label}}" 
+                                                    placeholder="{{field.help_text|safe}}"
+                                                    {% if field.field.required %}required="required"{% endif %}></textarea>
+                                                    <label class="input_label slow"></label>
                                             </div>
+                                            {% endif %}
+                                            {% endfor %}
+                            
                                             <div class="verify-box has-animation" data-delay="100">                                        
                                                 <ul class="verify-sum">
                                                     <li>1</li>
@@ -122,7 +141,9 @@
                                             <div class="button-box has-animation" data-delay="100">             
                                                 <div class="clapat-button-wrap parallax-wrap hide-ball">
                                                     <div class="clapat-button parallax-element">
-                                                        <div class="button-border rounded parallax-element-second"><input type="submit" class="send_message" id="submit" value="Send Mail" /></div>
+                                                        <div class="button-border rounded parallax-element-second">
+                                                            <input type="submit" class="send_message" id="submit" value="Send Mail"/>
+                                                        </div>
                                                     </div>
                                                 </div> 
                                             </div>
@@ -131,45 +152,6 @@
                                     </div>
                                     <!--/Contact Formular --> 
                                 </div>
-                                
-                            </div> 
-                            <!--/Row -->
-                            
-                            
-                            <!-- Row -->
-                            <div class="content-row row_padding_left row_padding_right full light-section" data-bgcolor="#eee">
-                            
-                            	<hr class="animated-line has-animation">
-                                
-                                <div class="one_third">
-                                    <h6 class="has-mask">/ 02</h6>
-                                </div>
-                                
-                                <div class="two_third last">
-                                	<h6 class="has-mask">Your partner for global projects</h6>    
-                                </div>
-                                                                
-                                <hr><hr>
-                                
-                                <div class="one_third">
-                                    <h3 class="has-mask-fill no-margins">Offices</h3>
-                                </div>
-
-                                <div class="one_third">
-                                	<h5>İstanbul</h5>
-                                    <h6 class="no-margins">Kozyatağı, Ataşehir,İstanbul, TR</h6>
-                                    <h6 class="no-margins"><a href="mailto:info@metatrine.com" class="link"><span>info@metatrine.com</span></a></h6>
-                                    <h6 class="no-margins"></h6>
-                                </div> 
-        
-                                <div class="one_third last">
-                                	<h5>Dubai</h5>
-                                    <h6 class="no-margins">Business Bay,  Bay Square, UAE</h6>
-                                    <h6 class="no-margins"><a href="mailto:info@metatrine.com" class="link"><span>info@metatrine.com</span></a></h6>
-                                    <h6 class="no-margins"></h6>
-                                </div>
-                                
-                                <hr>        
                                 
                             </div> 
                             <!--/Row -->

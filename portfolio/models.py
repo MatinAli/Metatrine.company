@@ -98,7 +98,7 @@ class PortfolioPage(Page):
         context = super(PortfolioPage,self).get_context(request)
         context['recents'] = self.get_recent_projects()
         return context 
-                
+
     content_panels = Page.content_panels + [
         MultiFieldPanel([
             FieldPanel('date'),

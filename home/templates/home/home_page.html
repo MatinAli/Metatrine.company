@@ -1,261 +1,299 @@
-{% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags %}
-{% load static %}
-{% block body_class %}hidden hidden-ball hero-below-caption smooth-scroll uppercase-text{% endblock %}
+{% extends "base.html" %} 
+{% load static i18n wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
+{% load static %} 
 {% block content %}
-	<main>		
-        <!-- Preloader -->
-        {% include "preloader.html" %}
-        <!--/Preloader -->     
-        
-        <div class="cd-index cd-main-content">
-    
-        <!-- Page Content -->
-        <div id="page-content" class="dark-content" data-bgcolor="#eee">
-            
-            <!-- Header -->
-            {% include "_navbar.html" %}
-            <!--/Header -->
-            
-            
-            
-            <!-- Content Scroll -->
-            <div id="content-scroll">
-            
-            
-                <!-- Main -->
-                <div id="main">
-                
-                    <!-- Hero Section -->
-                    <div id="hero">
-                        <div id="hero-styles">
-                            <div id="hero-caption" class="content-full-width parallax-scroll-caption indent-title">
-                                <div class="inner">                                                  
-                                    <div class="hero-title-wrapper">
-                                        <h1 class="hero-title">
-                                            {% for block in page.hero_title %}
-                                                <span>{{ block.value }}</span>
-                                            {% endfor %}
-                                        </h1></div>
-                                    <div class="hero-subtitle-wrapper"><h5 class="hero-subtitle"><span>{{ page.slogan|richtext }}</span></h5></div>
-                                </div>
-                            </div>
-                            <div id="hero-footer">
-                            	<div class="hero-footer-left">
-                                	<div class="button-wrap right scroll-down">
-                                        <div class="icon-wrap parallax-wrap">
-                                            <div class="button-icon parallax-element">
-                                                <i class="arrow-icon-down"></i>
-                                            </div>
-                                        </div>
-                                        <div class="button-text sticky right"><span data-hover="Scroll to Explore">Scroll to Explore</span></div> 
-                                    </div>
-                                </div>
-                                <div class="hero-footer-right">
-                    				<div id="info-text">Selected Case Studies (04)</div>
-                                </div>
-                            </div>                                  
-                        </div>
-                    </div>                      
-                    <!--/Hero Section -->   
-                         
-                    
-                    <!-- Main Content -->
-                    <div id="main-content">
-                        <!-- Main Page Content -->
-                        <div id="main-page-content" class="content-max-width">
-                            
-                            <!-- Row -->
-                            <div class="content-row row_padding_bottom full light-section" data-bgcolor="#eee">
-                                
-                                
-                                <div id="itemsWrapperLinks">
-                                    <div id="itemsWrapper" class="webgl-fitthumbs fx-three">                            
-                                
-                                        <!-- Portfolio Wrap -->
-                                        <div class="portfolio-wrap flex-grid content-full-width fade-scaleout-effect">                
-                                            <!-- Portfolio Columns -->
-                                            <div class="portfolio">
-                                                {% for portfolio in latest_portfolios %}
-                                                <div class="item wide trigger-item branding design" data-color="#de2606">
-                                                    <div class="item-parallax">
-                                                        <div class="item-appear">                                    		
-                                                            <div class="item-content">                            	                                    
-                                                                <a class="item-wrap ajax-link-project" data-type="page-transition" href="{% pageurl portfolio %}"></a>
-                                                                <div class="item-wrap-image">
-                                                                    {% with portfolio.banner_image as main_image %}
-                                                                    {% if main_image %}
-                                                                    {% image main_image original class="item-image grid__item-img trigger-item-link" %}
-                                                                    {% endif %}
-                                                                    {% endwith %}      
-                                                                    <!-- <img src="images/01hero.jpg" class="item-image grid__item-img trigger-item-link" alt=""> -->
-                                                                </div>
-                                                                    {% with portfolio.main_image as main_image %}
-                                                                    {% if main_image %}
-                                                                    {% image main_image original class="grid__item-img grid__item-img--large" %}
-                                                                    {% endif %}
-                                                                    {% endwith %}  
-                                                                <!-- <img class="grid__item-img grid__item-img--large" src="images/01hero.jpg" alt="" /> -->
-                                                            </div>                                             
-                                                        </div>
-                                                        <div class="item-caption-wrapper">
-                                                            <div class="item-caption">                                                    
-                                                                <div class="item-title"><span>{{ portfolio.title }}</span></div>
-                                                                {% with categories=portfolio.categories.all %}
-                                                                {% if categories %}
-                                                                {% for category in categories %}
-                                                                <div class="item-cat"><span data-hover="View Case">{{ category.name }}</span></div>                                                    
-                                                                {% endfor %}
-                                                                {% endif %}
-                                                                {% endwith %}  
-                                                            </div>
-                                                        </div>
-                                                    </div>                                        
-                                                </div>
-                                                {% endfor %}                                           
-                                            </div>
-                                            <!--/Portfolio -->                
-                                        </div>
-                                        <!--/Portfolio Wrap -->
-                                
-                                    </div>                                   
-                                </div>                
-                                
-                            </div> 
-                            <!--/Row -->
-                            
-                            
-                            
-                            
-                            
-                            <!-- Row -->
-                            <div class="content-row row_padding_left row_padding_right full light-section fadeout-element" data-bgcolor="#eee">
-                                
-                                <hr>
-                                
-                                <h1 class="text-align-center">{{ page.content_row }}</h1>
-                                
-                                <hr><hr> 
-                                   
-                                <div class="one_half"></div>
-                                
-                                <div class="one_half last">
-                                {% for item in page.business_statement.all %}
-                                    <h5 class="has-mask-fill">{{ item.title|richtext }}</h5>
-                                    <p class="has-animation" data-delay="0">{{ item.body|richtext }}</p>
-                                    <hr>
-                                {% endfor %}
-                                </div>
-                                
-                                <div class="one_half">
-                                	<div class="button-wrap right">
-                                        <div class="icon-wrap parallax-wrap">
-                                            <div class="button-icon parallax-element">
-                                                <i class="arrow-icon-down"></i>
-                                            </div>
-                                        </div> 
-                                        <a class="ajax-link" data-type="page-transition" href="{% slugurl 'about' %}"><div class="button-text sticky right"><span data-hover="Read About Us">Read About Us</span></div></a> 
-                                    </div>
-                                </div>
-                                
-                                <div class="one_half last"></div>
-                                
-                                <hr>
-                            
-                            </div> 
-                            <!--/Row -->
-                            
-                            
-                            <!-- Row -->
-                            <div class="content-row full dark-section change-header-color" data-bgcolor="#eee">
-                                
-                                <figure class="has-parallax has-parallax-content" data-delay="100">
-                                    <img src="{% static 'images/about.jpg' %}" width="" height="" alt="Image Title">
-                                    <div class="parallax-image-content content-max-width text-align-center">
-                                    	<div class="outer">
-                                            <div class="inner">                  
-                                            {% for block in page.call_to_action %}                              
-                                                <h3 class="has-mask-fill no-margins">{{ block.value }}</h3>
-                                            {% endfor %}
-                                            </div>
-                                    	</div>
-                                    </div>
-                                </figure>
-                                
-                            </div> 
-                            <!--/Row -->
-
-                        </div>
-                        <!--/Main Page Content -->
-                        
-                        
-                        <!-- Page Navigation --> 
-                        <div id="page-nav">
-                            <div class="page-nav-wrap">
-                                <div class="page-nav-caption content-full-width block-title marquee-title">                                 
-                                    <div class="inner">                                        
-                                        <a class="page-title next-ajax-link-page" data-type="page-transition" data-firstline="Next" data-secondline="Page" href="{% slugurl 'contact' %}">                                            
-                                            <div class="next-hero-title-wrapper"><div class="next-hero-title"><span>Get in Touch Get in Touch</span></div></div>
-                                        </a>
-                                        <div class="next-hero-subtitle-wrapper"><div class="next-hero-subtitle">
-                                        	<span>We would love to hear from you.</span>
-                                            <span>Let’s work together</span>
-                                        </div></div>
-                                    </div>               
-                                </div>
-                            </div>
-                        </div>      
-                        <!--/Page Navigation -->
-                        
-                                
+<main>
+  <!-- Preloader -->
+  {% include "preloader.html" %}
+  <!--/Preloader -->
+  <div class="cd-index cd-main-content">
+    <!-- Page Content -->
+    <div id="page-content" class="dark-content" data-bgcolor="#eee">
+      <!-- Header -->
+      {% include "_navbar.html" %}
+      <!--/Header -->
+      <!-- Content Scroll -->
+      <div id="content-scroll">
+        <!-- Main -->
+        <div id="main">
+          <!-- Hero Section -->
+          <div id="hero">
+            <div id="hero-styles">
+              <div id="hero-caption" class="content-full-width parallax-scroll-caption indent-title">
+                <div class="inner">
+                  <div class="hero-title-wrapper">
+                    <h1 class="hero-title">
+                      {% for block in page.hero_title %}<span>{{ block.value }}</span>{% endfor %}
+                    </h1>
+                  </div>
+                  <div class="hero-subtitle-wrapper">
+                    <h5 class="hero-subtitle">
+                      <span>{{ page.slogan|safe }}</span>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              <div id="hero-footer">
+                <div class="hero-footer-left">
+                  <div class="button-wrap right scroll-down">
+                    <div class="icon-wrap parallax-wrap">
+                      <div class="button-icon parallax-element">
+                        <i class="arrow-icon-down"></i>
+                      </div>
                     </div>
-                    <!--/Main Content --> 
-                
+                    <div class="button-text sticky right">
+                      <span data-hover="Scroll to Explore">Scroll to Explore</span>
+                    </div>
+                  </div>
                 </div>
-                <!--/Main -->
-                
-                <!-- Footer -->
-                {% include "footer.html" %}
-                <!--/Footer -->
-            
-        
-        	</div>
-            <!--/Content Scroll -->
-            
-            
-            <div class="thumb-wrapper">
-                <div class="thumb-container">
-                    <div class="thumb-page" data-src="images/01hero.jpg"></div>
-                    <div class="thumb-page" data-src="images/03hero.jpg"></div>
-                    <div class="thumb-page" data-src="images/04hero.jpg"></div>
-                    <div class="thumb-page" data-src="images/05hero.jpg"></div>
+                <div class="hero-footer-right">
+                  <div id="info-text">
+                    Selected Case Studies ( {{ latest_portfolios|length }} )
+                  </div>
                 </div>
+              </div>
             </div>
-            
-            <div id="app"></div>
-            
-            
-		</div>    
-        <!--/Page Content -->
-    
-		</div>
-	</main>
-    
-    
-    
-    
-    <div class="cd-cover-layer"></div>
-    <div id="magic-cursor">
-        <div id="ball">
-        	<div id="ball-drag-x"></div>
-            <div id="ball-drag-y"></div>
-        	<div id="ball-loader"></div>
+          </div>
+          <!--/Hero Section -->
+          <!-- Main Content -->
+          <div id="main-content">
+            <!-- Main Page Content -->
+            <div id="main-page-content" class="content-max-width">
+              <!-- Row -->
+              <div class="content-row row_padding_bottom full light-section" data-bgcolor="#eee">
+                <div id="itemsWrapperLinks">
+                  <div id="itemsWrapper" class="webgl-fitthumbs fx-three">
+                    <!-- Portfolio Wrap -->
+                    <div class="portfolio-wrap flex-grid content-full-width fade-scaleout-effect">
+                      <!-- Portfolio Columns -->
+                      <div class="portfolio">
+                      {% for portfolio in latest_portfolios %}
+                        <div class="item wide trigger-item branding design" data-color="#de2606">
+                          <div class="item-parallax">
+                            <div class="item-appear">
+                              <div class="item-content">
+                                <a class="item-wrap ajax-link-project" data-type="page-transition" href="{% pageurl portfolio %}"></a>
+                                <div class="item-wrap-image">
+                                  {% with portfolio.banner_image as main_image %} 
+                                  {% if main_image %} 
+                                  {% image main_image original class="item-image grid__item-img trigger-item-link" %}
+                                  {% endif %} 
+                                  {% endwith %}
+                                </div>
+                            </div>
+                            <div class="item-caption-wrapper">
+                              <div class="item-caption">
+                                <div class="item-title">
+                                  <span>{{ portfolio.title }}</span>
+                                </div>
+                                {% with categories=portfolio.categories.all %}
+                                {% if categories %}
+                                {% for category in categories %}
+                                <div class="item-cat">
+                                  <span data-hover="View Case">{{ category.name }}</span>
+                                </div>
+                                {% endfor %} 
+                                {% endif %} 
+                                {% endwith %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                      </div>
+                      <!--/Portfolio -->
+                    </div>
+                    <!--/Portfolio Wrap -->
+                  </div>
+                </div>
+              </div>
+              <!--/Row -->
+              <!-- Row -->
+              <div class="content-row row_padding_left row_padding_right full light-section fadeout-element"
+                data-bgcolor="#eee">
+                <hr />
+                <h1 class="text-align-center">{{ page.content_row }}</h1>
+                <hr />
+                <hr />
+                <div class="one_half"></div>
+                <div class="one_half last">
+                  {% for item in page.business_statement.all %}
+                  <h5 class="has-mask-fill">{{ item.title|richtext }}</h5>
+                  <p class="has-animation" data-delay="0">
+                    {{ item.body|richtext }}
+                  </p>
+                  <hr />
+                  {% endfor %}
+                </div>
+                <div class="one_half">
+                  <div class="button-wrap right">
+                    <div class="icon-wrap parallax-wrap">
+                      <div class="button-icon parallax-element">
+                        <i class="arrow-icon-down"></i>
+                      </div>
+                    </div>
+                    <a class="ajax-link" data-type="page-transition" href="{% slugurl 'about' %}">
+                      <div class="button-text sticky right">
+                        <span data-hover="Read About Us">Read About Us</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="one_half last"></div>
+                <hr />
+              </div>
+              <!--/Row -->
+              <!-- Row -->
+              <div class="content-row full dark-section change-header-color" data-bgcolor="#eee">
+                <figure class="has-parallax has-parallax-content" data-delay="100">
+                  <img src="{% static 'images/about.jpg' %}" width="" height="" alt="Image Title" />
+                  <div class="parallax-image-content content-max-width text-align-center">
+                    <div class="outer">
+                      <div class="inner">
+                        {% for block in page.call_to_action %}
+                        <h3 class="has-mask-fill no-margins">
+                          {{ block.value }}
+                        </h3>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </figure>
+              </div>
+              <!--/Row -->
+              <!-- Row -->
+              <div class="content-row row_padding_top row_padding_left row_padding_right full light-section"
+                data-bgcolor="#eee">
+                <h6>/ Get Informed</h6>
+                <hr />
+                <h1 class="big-title1 has-mask-fill no-margins">Read</h1>
+                <h1 class="big-title1 has-mask-fill no-margins">All News</h1>
+                <hr />
+                <hr />
+              </div>
+              <!--/Row -->
+              <!-- Row -->
+              <div class="content-row row_padding_left row_padding_right full light-section" data-bgcolor="#eee">
+                <article class="post">
+                  <div class="article-wrap">
+                    <div class="hover-reveal">
+                      <div class="hover-reveal__inner">
+                        <div class="hover-reveal__img">
+                          <img src="images/news01.jpg" alt="Post Image" height="" width="" />
+                        </div>
+                      </div>
+                    </div>
+                    <a class="post-title ajax-link has-mask-fill" href="index.html" data-type="page-transition"
+                      data-color="#000">Collection of Work</a>
+                  </div>
+                  <div class="article-content">
+                    <div class="entry-meta-wrap">
+                      <div class="entry-meta entry-categories">
+                        <ul class="post-categories">
+                          <li class="link">
+                            <a class="ajax-link" href="index.html" data-type="page-transition"><span
+                                data-hover="Intern">Intern</span></a>
+                          </li>
+                          <li class="link">
+                            <a class="ajax-link" href="index.html" data-type="page-transition"><span
+                                data-hover="Projects">Projects</span></a>
+                          </li>
+                          <li class="link">
+                            <a class="ajax-link" href="index.html" data-type="page-transition"><span
+                                data-hover="Agency">Agency</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="entry-meta-wrap">
+                      <ul class="entry-meta entry-date">
+                        <li class="link">
+                          <a class="ajax-link" href="index.html" data-type="page-transition"><span
+                              data-hover="March 14, 2022">March 14, 2022</span></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </article>
+                <div class="two_fifth">
+                  <hr />
+                  <hr />
+                  <h5 class="has-mask">We help businesses to innovate and remain highly relevant to their customers only by developing digital creative</h5>
+                  <br />
+                  <div class="button-box has-animation" data-delay="100">
+                    <div class="clapat-button-wrap parallax-wrap hide-ball">
+                      <div class="clapat-button parallax-element">
+                        <div class="button-border rounded parallax-element-second">
+                          <a class="ajax-link" href="{% slugurl 'blog' %}" data-type="page-transition">
+                            <span data-hover="READ BLOG">READ BLOG</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="three_fifth last"></div>
+              </div>
+              <!--/Row -->
+            </div>
+            <!--/Main Page Content -->
+            <!-- Page Navigation -->
+            <div id="page-nav">
+              <div class="page-nav-wrap">
+                <div class="page-nav-caption content-full-width block-title marquee-title">
+                  <div class="inner">
+                    <a class="page-title next-ajax-link-page" data-type="page-transition" data-firstline="Next"
+                      data-secondline="Page" href="{% slugurl 'contact' %}">
+                      <div class="next-hero-title-wrapper">
+                        <div class="next-hero-title">
+                          <span>Get in Touch Get in Touch</span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="next-hero-subtitle-wrapper">
+                      <div class="next-hero-subtitle">
+                        <span>We would love to hear from you.</span>
+                        <span>Let’s work together</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/Page Navigation -->
+          </div>
+          <!--/Main Content -->
         </div>
+        <!--/Main -->
+        <!-- Footer -->
+        {% include "footer.html" %}
+        <!--/Footer -->
+      </div>
+      <!--/Content Scroll -->
+      <div class="thumb-wrapper">
+        <div class="thumb-container">
+          <div class="thumb-page" data-src="images/01hero.jpg"></div>
+          <div class="thumb-page" data-src="images/03hero.jpg"></div>
+          <div class="thumb-page" data-src="images/04hero.jpg"></div>
+          <div class="thumb-page" data-src="images/05hero.jpg"></div>
+        </div>
+      </div>
+      <div id="app"></div>
     </div>
-    <div id="clone-image">
-    	<div class="hero-translate"></div>
-    </div>
-    <div id="rotate-device"></div>
-    {% block extra_js %}
-    {% endblock %}
+    <!--/Page Content -->
+  </div>
+</main>
+<div class="cd-cover-layer"></div>
+<div id="magic-cursor">
+  <div id="ball">
+    <div id="ball-drag-x"></div>
+    <div id="ball-drag-y"></div>
+    <div id="ball-loader"></div>
+  </div>
+</div>
+<div id="clone-image">
+  <div class="hero-translate"></div>
+</div>
+<div id="rotate-device"></div>
+{% block extra_js %}{% endblock %} 
 {% endblock content %}

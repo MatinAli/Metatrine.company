@@ -122,12 +122,15 @@ class SnapShot(models.Model):
            related_name='snap_shot')
 
 
-    title = models.CharField(max_length= 100, blank=True, null=True)
+    row_title = models.CharField(max_length= 100, blank=True, null=True)
+    
+    snapshot_title = models.CharField(max_length= 100, blank=True, null=True)
 
     count_field = models.IntegerField(null=True, blank=True, )
 
     panels = [
-        FieldPanel('title'),
+        FieldPanel('row_title'),
+        FieldPanel('snapshot_title'),
         FieldPanel('count_field')
     ]
 

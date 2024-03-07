@@ -1,222 +1,203 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load static %}
-{% block body_class %}hidden hidden-ball hero-below-caption smooth-scroll uppercase-text{% endblock %}
 {% block content %}
-	<main>		
+    <main>
         <!-- Preloader -->
         {% include "preloader.html" %}
-        <!--/Preloader -->     
-        
+        <!--/Preloader -->
         <div class="cd-index cd-main-content">
-    
-        <!-- Page Content -->
-        <div id="page-content" class="dark-content" data-bgcolor="#eee">
-            
-            <!-- Header -->
-            {% include "_navbar.html" %}
-            <!--/Header -->        
-            
-            <!-- Content Scroll -->
-            <div id="content-scroll">
-            
-            
-                <!-- Main -->
-                <div id="main">
-                
-                    <!-- Hero Section -->
-                    <div id="hero" class="has-image">
-                        <div id="hero-styles">
-                            <div id="hero-caption" class="content-full-width parallax-scroll-caption">
-                                <div class="inner">
-                                    <div class="hero-title-wrapper"><h1 class="hero-title"><span>{{ page.title }}</span></h1></div>                                    
-                                </div>
-                            </div>
-                            <div id="hero-footer">
-                            	<div class="hero-footer-left">
-                                	<div class="button-wrap right scroll-down">
-                                        <div class="icon-wrap parallax-wrap">
-                                            <div class="button-icon parallax-element">
-                                                <i class="arrow-icon-down"></i>
-                                            </div>
+            <!-- Page Content -->
+            <div id="page-content" class="dark-content" data-bgcolor="#eee">
+                <!-- Header -->
+                {% include "_navbar.html" %}
+                <!--/Header -->
+                <!-- Content Scroll -->
+                <div id="content-scroll">
+                    <!-- Main -->
+                    <div id="main">
+                        <!-- Hero Section -->
+                        <div id="hero" class="has-image">
+                            <div id="hero-styles">
+                                <div id="hero-caption" class="content-full-width parallax-scroll-caption">
+                                    <div class="inner">
+                                        <div class="hero-title-wrapper">
+                                            <h1 class="hero-title">
+                                                <span>{{ page.title }}</span>
+                                            </h1>
                                         </div>
-                                        <div class="button-text sticky right"><span data-hover="Scroll to Explore">Scroll to Explore</span></div> 
                                     </div>
                                 </div>
-                                <div class="hero-footer-right">
-                    				<div id="share" class="page-action-content" data-text="Share:"></div>
+                                <div id="hero-footer">
+                                    <div class="hero-footer-left">
+                                        <div class="button-wrap right scroll-down">
+                                            <div class="icon-wrap parallax-wrap">
+                                                <div class="button-icon parallax-element">
+                                                    <i class="arrow-icon-down"></i>
+                                                </div>
+                                            </div>
+                                            <div class="button-text sticky right">
+                                                <span data-hover="Scroll to Explore">Scroll to Explore</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hero-footer-right">
+                                        <div id="share" class="page-action-content" data-text="Share:"></div>
+                                    </div>
                                 </div>
-                            </div>                                    
+                            </div>
                         </div>
-                    </div>
-                    <div id="hero-image-wrapper" class="change-header-color">
-                    	<div id="hero-background-layer" class="parallax-scroll-image">
-                            {% with page.banner_image as main_image %}
-                            {% if main_image %}
-                            {% image main_image original id="hero-bg-image" %}
-                            {% endif %}
-                            {% endwith %}
+                        <div id="hero-image-wrapper" class="change-header-color">
+                            <div id="hero-background-layer" class="parallax-scroll-image">
+                                {% with page.banner_image as main_image %}
+                                    {% if main_image %}
+                                        {% image main_image original id="hero-bg-image" %}
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
                         </div>
-                    </div>                        
-                    <!--/Hero Section -->   
-                    
-                    <!-- Main Content -->
-                    <div id="main-content">
-                        <div id="main-page-content">
-                        
-                        
-                            <!-- Row -->
-                            <div class="content-row row_padding_top row_padding_left row_padding_right row_padding_bottom full light-section" data-bgcolor="#eee">
-                                
-                                <div class="pinned-section">
-                                    <div class="pinned-element left">
-                                        
-                                        <h5>Overview</h5>
-                                        <h6>
-                                            Execution Date : {{ page.date.year}}
-                                        </h6>
+                        <!--/Hero Section -->
+                        <!-- Main Content -->
+                        <div id="main-content">
+                            <div id="main-page-content">
+                                <!-- Row -->
+                                <div class="content-row row_padding_top row_padding_left row_padding_right row_padding_bottom full light-section"
+                                     data-bgcolor="#eee">
+                                    <div class="pinned-section">
+                                        <div class="pinned-element left">
+                                            <h5>Overview</h5>
+                                            <h6>Execution Date : {{ page.date.year }}</h6>
                                             <h6>
-                                            {% with categories=page.categories.all %}
-                                            {% if categories %}
-                                            {% for category in categories %}
-                                                Category : {{ category.name }}
-                                            {% endfor %}
-                                            {% endif %}
-                                            {% endwith %}  
+                                                {% with categories=page.categories.all %}
+                                                    {% if categories %}
+                                                        {% for category in categories %}Category : {{ category.name }}{% endfor %}
+                                                    {% endif %}
+                                                {% endwith %}
                                             </h6>
                                             <h6>
-                                            {% with industries=page.industries.all %}
-                                            {% if industries %}
-                                            {% for industry in industries %}
-                                                Industry: {{ industry.name }}
-                                            </h6>
-                                            {% endfor %}
-                                            {% endif %}
+                                                {% with industries=page.industries.all %}
+                                                    {% if industries %}
+                                                        {% for industry in industries %}
+                                                            Industry: {{ industry.name }}
+                                                        </h6>
+                                                    {% endfor %}
+                                                {% endif %}
                                             {% endwith %}
                                             <h6>
-                                            {% with technologies=page.technologies.all %}
-                                            {% if technologies %}
-                                            {% for technology in technologies %}
-                                                technologies: {{ technology.name }}
-                                            {% endfor %}
-                                            {% endif %}
-                                            {% endwith %}
+                                                {% with technologies=page.technologies.all %}
+                                                    {% if technologies %}
+                                                        {% for technology in technologies %}technologies: {{ technology.name }}{% endfor %}
+                                                    {% endif %}
+                                                {% endwith %}
                                             </h6>
-
-                                        <div class="button-box has-animation" data-delay="100">             
-                                            <div class="clapat-button-wrap parallax-wrap hide-ball">
-                                                <div class="clapat-button parallax-element">
-                                                    <div class="button-border rounded parallax-element-second">
-                                                        <a target="_blank" href="{{ page.project_link }}">
-                                                            <span data-hover="VISIT LINK">VISIT LINK</span>
-                                                         </a>
+                                            <div class="button-box has-animation" data-delay="100">
+                                                <div class="clapat-button-wrap parallax-wrap hide-ball">
+                                                    <div class="clapat-button parallax-element">
+                                                        <div class="button-border rounded parallax-element-second">
+                                                            <a target="_blank" href="{{ page.project_link }}">
+                                                                <span data-hover="VISIT LINK">VISIT LINK</span>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div> 
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="scrolling-element right">
-                                        
-                                        <h4 class="has-mask">{{ page.introduction }}</h4>
-                                        <hr>
-                                        <p class="has-animation" data-delay="0">{{ page.body|richtext }}</p>                                        
-                                    </div>
-                                </div>
-                                
-                            </div> 
-                            <!--/Row -->
-                            
-                            <!-- Row -->                       
-                            <div class="content-row light-section" data-bgcolor="#eee">                        	
-                                <div class="swiper-container content-looped-carousel autocenter light-cursor">  
-        							<div class="swiper-wrapper">
-                                    {% for item in page.portfolio_gallery.all %}
-                                        {% with item.image as gallery %}
-                                        {% if gallery %}  
-            							<div class="swiper-slide"><div class="slide-img">{% image  gallery original %}</div></div>
-                                        {% endif %}
-                                        {% endwith %}
-                                    {% endfor %}
-                                    </div>
-                                    <div class="slider-button-next"></div>
-    								<div class="slider-button-prev"></div>
-                                    <div class="swiper-pagination"></div> 
-                                     
-                                </div>                                  
-                            </div> 
-
-                            <!--/Row -->
-                        
-                        
-                        </div>
-                        <!--/Main Page Content --> 
-                        
-                        
-                        
-                        <!-- Project Navigation --> 
-                        <div id="project-nav" class="" data-bgcolor="#000">
-                            <div class="next-project-wrap">
-                                <div class="next-project-caption content-full-width">
-                                    <div class="next-caption-wrapper">
-                                    	<div class="caption-wrapper">
-                                            {% for recent in recents %}
-                                            <a class="next-ajax-link-project auto-trigger" data-type="page-transition" href="{% pageurl recent %}" data-color="#963a8d" data-firstline="Next" data-secondline="Project"></a>
-                                            <div class="next-caption">                                         
-                                                <div class="next-hero-subtitle-wrapper"><div class="next-hero-subtitle"><span>NEXT PROJECT</span></div></div>
-                                                <div class="next-hero-progress"><span></span></div>                                                                                            
-                                                <div class="next-hero-title-wrapper"><div class="next-hero-title"><span>{{ recent.title }}</span></div></div>
                                             </div>
-                                            {% endfor %}
-                                        </div>                                        
-                                    </div>                   
+                                        </div>
+                                        <div class="scrolling-element right">
+                                            <h4 class="has-mask">{{ page.introduction }}</h4>
+                                            <hr>
+                                            <p class="has-animation" data-delay="0">{{ page.body|richtext }}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="next-project-image-wrapper">
-                                    <div class="next-project-image">
-                                        <div class="next-project-image-bg" style="background-image:url(images/01hero.jpg)"></div>
-                                    </div>            
+                                <!--/Row -->
+                                <!-- Row -->
+                                <div class="content-row light-section" data-bgcolor="#eee">
+                                    <div class="swiper-container content-looped-carousel autocenter light-cursor">
+                                        <div class="swiper-wrapper">
+                                            {% for item in page.portfolio_gallery.all %}
+                                                {% with item.image as gallery %}
+                                                    {% if gallery %}
+                                                        <div class="swiper-slide">
+                                                            <div class="slide-img">{% image gallery original %}</div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endwith %}
+                                            {% endfor %}
+                                        </div>
+                                        <div class="slider-button-next"></div>
+                                        <div class="slider-button-prev"></div>
+                                        <div class="swiper-pagination"></div>
+                                    </div>
+                                </div>
+                                <!--/Row -->
+                            </div>
+                            <!--/Main Page Content -->
+                            <!-- Project Navigation -->
+                            <div id="project-nav" data-bgcolor="#000">
+                                <div class="next-project-wrap">
+                                    <div class="next-project-caption content-full-width">
+                                        <div class="next-caption-wrapper">
+                                            <div class="caption-wrapper">
+                                                {% for recent in recents %}
+                                                    <a class="next-ajax-link-project auto-trigger"
+                                                       data-type="page-transition"
+                                                       href="{% pageurl recent %}"
+                                                       data-color="#963a8d"
+                                                       data-firstline="Next"
+                                                       data-secondline="Project"></a>
+                                                    <div class="next-caption">
+                                                        <div class="next-hero-subtitle-wrapper">
+                                                            <div class="next-hero-subtitle">
+                                                                <span>NEXT PROJECT</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="next-hero-progress">
+                                                            <span></span>
+                                                        </div>
+                                                        <div class="next-hero-title-wrapper">
+                                                            <div class="next-hero-title">
+                                                                <span>{{ recent.title }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="next-project-image-wrapper">
+                                        <div class="next-project-image">
+                                            <div class="next-project-image-bg"
+                                                 style="background-image:url(images/01hero.jpg)"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>      
-                        <!--/Project Navigation -->                                                
-                                
+                            <!--/Project Navigation -->
+                        </div>
+                        <!--/Main Content -->
                     </div>
-                    <!--/Main Content --> 
+                    <!--/Main -->
+                    <!-- Footer -->
+                    {% include "footer.html" %}
+                    <!--/Footer -->
                 </div>
-                <!--/Main --> 
-                
-                
-                <!-- Footer -->
-                {% include "footer.html" %}
-                <!--/Footer -->
-            
-        
-        	</div>
-            <!--/Content Scroll -->
-            
-            <div id="app"></div>
-            
-		</div>    
-        <!--/Page Content -->
-    
-		</div>
-	</main>
-    
-    
-    
-   <div class="cd-cover-layer"></div>
+                <!--/Content Scroll -->
+                <div id="app"></div>
+            </div>
+            <!--/Page Content -->
+        </div>
+    </main>
+    <div class="cd-cover-layer"></div>
     <div id="magic-cursor">
         <div id="ball">
-        	<div id="ball-drag-x"></div>
+            <div id="ball-drag-x"></div>
             <div id="ball-drag-y"></div>
-        	<div id="ball-loader"></div>
+            <div id="ball-loader"></div>
         </div>
     </div>
     <div id="clone-image">
-    	<div class="hero-translate"></div>
+        <div class="hero-translate"></div>
     </div>
     <div id="rotate-device"></div>
-    {% block extra_js %}
-    {% endblock %}
+    {% block extra_js %}{% endblock %}
 {% endblock content %}

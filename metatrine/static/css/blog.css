@@ -704,11 +704,11 @@
   }
   
   .post-template-content  #hero #hero-caption {
-    max-width: 1020px;
+    /* max-width: 1020px; */
     padding-bottom: 40px;
   }
   
-  .post-template-content .hero-title {
+  /* .post-template-content .hero-title {
     font-size: calc(1rem + 4.15vw);
     line-height: calc(1rem + 5.5vw);
     margin-top: 10px;
@@ -717,7 +717,7 @@
     word-wrap: break-word;
     white-space: initial;
     margin-left: -0.7vw;
-  }
+  } */
   
   .post-template-content .inline-title .hero-title span {
     display: block;

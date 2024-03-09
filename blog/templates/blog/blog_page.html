@@ -15,9 +15,63 @@
                 <!-- Header -->
                 {% include "_navbar.html" %}
                 <!--/Header -->
-                <!-- Sidebar -->
-                {% include "sidebar.html" %}
-                <!--/Sidebar -->
+    <!-- Sidebar -->
+    <div id="black-fade"></div>
+    <div id="sidebar">
+        <div id="open-sidebar" class="link">
+            <i class="fa-solid fa-arrow-left"></i>
+        </div>
+        <div id="scrollbar"></div>
+        <div class="sidebar-content">
+            <div id="block-2"
+                 class="widget clapat-sidebar-widget widget_block widget_search">
+                <form role="search"
+                      method="get"
+                      action="{% url 'search' %}"
+                      class="wp-block-search__button-outside wp-block-search__text-button wp-block-search">
+                    <label class="wp-block-search__label" for="wp-block-search__input-1">Search</label>
+                    <div class="wp-block-search__inside-wrapper ">
+                        <input class="wp-block-search__input"
+                               id="wp-block-search__input-1"
+                               placeholder=""
+                               {% if search_query %}
+                               value="{{ search_query }}"
+                               {% endif %}
+                               type="search"
+                               name="s"
+                               required />
+                        <button aria-label="Search"
+                                class="wp-block-search__button wp-element-button"
+                                type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div id="block-3" class="widget clapat-sidebar-widget widget_block">
+                <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+                    <div class="wp-block-group__inner-container">
+                        <h5 class="wp-block-heading">Recent Posts</h5>
+                        <ul class="wp-block-latest-posts__list wp-block-latest-posts">
+                        {% for recent_post in recent_posts %}
+                            <li>
+                                <a class="wp-block-latest-posts__post-title"
+                                   href="{% pageurl recent_post %}">{{ recent_post.post_title }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="block-4" class="widget clapat-sidebar-widget widget_block">
+                <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+                    <div class="wp-block-group__inner-container">
+                        <h5 class="wp-block-heading">Recent Comments</h5>
+                        <div class="no-comments wp-block-latest-comments">No comments to show.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/Sidebar -->
                 <div id="content-scroll">
                     <!-- Main -->
                     <div id="main">
@@ -29,7 +83,7 @@
                                     <div class="inner">
                                         <ul class="entry-meta entry-date">
                                             <li class="link">
-                                                <a href="{% pageurl page %}"><span data-hover="{{ page.pub_date|date:'M j,Y' }}">{{ page.pub_date|date:'M j,Y' }}</span></a>
+                                                <a href="{% pageurl page %}"><span data-hover="{{ page.pub_date }}">{{ page.pub_date|date:"F d, Y" }}</span></a>
                                             </li>
                                         </ul>
                                         <h1 class="hero-title">
@@ -59,7 +113,7 @@
                                 <div id="post-image">
                                 {% with page.main_image as main_image %}
                                 {% if main_image %}
-                                    {% image main_image original alt="{{ main_image.caption }}"}
+                                    {% image main_image original alt="{{ main_image.caption }}" %}
                                 {% endif %}
                                 {% endwith %}         
                                 </div>
@@ -68,7 +122,7 @@
                                     <div class="post-max-width">
                                         <h4 class="wp-block-heading">{{ page.main_header }}</h4>
 
-                                        {{ page.body|richtext }}
+                                        {{ page.post_body|richtext }}
                                         
                                         <blockquote class="wp-block-quote">
                                             <p>

@@ -2,3 +2,25 @@
 #page-nav .page-nav-caption{
     padding-top: 120px !important;
 }
+
+@media only screen and (max-width: 768px){
+    .hero-below-caption #hero.has-image {
+        padding-bottom:50vh !important;
+    }
+
+    #hero-image-wrapper{
+        height: 50vh !important;
+
+    }
+
+}
+@media only screen and (min-width: 768px){
+
+    #portfolio{
+        height: 50vh !important
+    }
+    #recent-posts{
+        height: 50vh !important;
+    }
+}
+

@@ -22,7 +22,6 @@ jQuery(function ($) {
 		Core();
 		JustifiedGrid();
 		Lightbox();
-		ContactForm();	
 		PlayVideo();
 		ContactMap();
 		Blog();
@@ -2129,7 +2128,6 @@ function Blog() {
 		JustifiedGrid();
 		Lightbox();
 		PlayVideo();
-		ContactForm();
 		ContactMap();
 		BlogLazyLoad();
 		Blog();

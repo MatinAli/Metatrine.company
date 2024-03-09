@@ -66,7 +66,7 @@
                     <!-- Portfolio Wrap -->
                     <div class="portfolio-wrap flex-grid content-full-width fade-scaleout-effect">
                       <!-- Portfolio Columns -->
-                      <div class="portfolio">
+                      <div class="portfolio" id="portfolio">
                       {% for portfolio in latest_portfolios %}
                         <div class="item wide trigger-item branding design" data-color="#de2606">
                           <div class="item-parallax">
@@ -76,7 +76,7 @@
                                 <div class="item-wrap-image">
                                   {% with portfolio.banner_image as main_image %} 
                                   {% if main_image %} 
-                                  {% image main_image original class="item-image grid__item-img trigger-item-link" %}
+                                  {% image main_image original class="item-image grid__item-img trigger-item-link" id="recent-posts" %}
                                   {% endif %} 
                                   {% endwith %}
                                 </div>
@@ -174,47 +174,49 @@
               <!--/Row -->
               <!-- Row -->
               <div class="content-row row_padding_left row_padding_right full light-section" data-bgcolor="#eee">
+              {% for post in recent_posts %}
+              {% with post=post.specific %}
                 <article class="post">
                   <div class="article-wrap">
                     <div class="hover-reveal">
                       <div class="hover-reveal__inner">
                         <div class="hover-reveal__img">
-                          <img src="images/news01.jpg" alt="Post Image" height="" width="" />
+                        {% with post.main_image as main_image %}
+                        {% if main_image %}
+                            {% image main_image original alt="{{ main_image.caption }}" %}
+                        {% endif %}
+                        {% endwith %}
                         </div>
                       </div>
                     </div>
-                    <a class="post-title ajax-link has-mask-fill" href="index.html" data-type="page-transition"
-                      data-color="#000">Collection of Work</a>
+                    <a class="post-title ajax-link has-mask-fill" href="{% pageurl post %}" data-type="page-transition"
+                      data-color="#000">{{ post.post_title }}</a>
                   </div>
                   <div class="article-content">
                     <div class="entry-meta-wrap">
                       <div class="entry-meta entry-categories">
                         <ul class="post-categories">
+                        {% for category in post_category %}
                           <li class="link">
-                            <a class="ajax-link" href="index.html" data-type="page-transition"><span
-                                data-hover="Intern">Intern</span></a>
+                            <a class="ajax-link" href="{% url 'blog_category' category.slug %}" data-type="page-transition"><span
+                                data-hover="{{ category.name }}">{{ category.name }}</span></a>
                           </li>
-                          <li class="link">
-                            <a class="ajax-link" href="index.html" data-type="page-transition"><span
-                                data-hover="Projects">Projects</span></a>
-                          </li>
-                          <li class="link">
-                            <a class="ajax-link" href="index.html" data-type="page-transition"><span
-                                data-hover="Agency">Agency</span></a>
-                          </li>
+                          {% endfor %}
                         </ul>
                       </div>
                     </div>
                     <div class="entry-meta-wrap">
                       <ul class="entry-meta entry-date">
                         <li class="link">
-                          <a class="ajax-link" href="index.html" data-type="page-transition"><span
-                              data-hover="March 14, 2022">March 14, 2022</span></a>
+                          <a class="ajax-link" href="{% pageurl post %}" data-type="page-transition"><span
+                              data-hover="{{ post.pub_date }}">{{ post.pub_date| date:"F d, Y" }}</span></a>
                         </li>
                       </ul>
                     </div>
                   </div>
                 </article>
+                {% endwith %}
+                {% endfor %}
                 <div class="two_fifth">
                   <hr />
                   <hr />

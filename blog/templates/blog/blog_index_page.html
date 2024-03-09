@@ -12,8 +12,62 @@
             <!-- Header -->
             {% include "_navbar.html" %}
             <!--/Header -->
-   <!-- Sidebar -->
-            {% include "_sidebar.html" %}
+    <!-- Sidebar -->
+    <div id="black-fade"></div>
+    <div id="sidebar">
+        <div id="open-sidebar" class="link">
+            <i class="fa-solid fa-arrow-left"></i>
+        </div>
+        <div id="scrollbar"></div>
+        <div class="sidebar-content">
+            <div id="block-2"
+                 class="widget clapat-sidebar-widget widget_block widget_search">
+                <form role="search"
+                      method="get"
+                      action="{% url 'search' %}"
+                      class="wp-block-search__button-outside wp-block-search__text-button wp-block-search">
+                    <label class="wp-block-search__label" for="wp-block-search__input-1">Search</label>
+                    <div class="wp-block-search__inside-wrapper ">
+                        <input class="wp-block-search__input"
+                               id="wp-block-search__input-1"
+                               placeholder=""
+                               {% if search_query %}
+                               value="{{ search_query }}"
+                               {% endif %}
+                               type="search"
+                               name="s"
+                               required />
+                        <button aria-label="Search"
+                                class="wp-block-search__button wp-element-button"
+                                type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div id="block-3" class="widget clapat-sidebar-widget widget_block">
+                <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+                    <div class="wp-block-group__inner-container">
+                        <h5 class="wp-block-heading">Recent Posts</h5>
+                        <ul class="wp-block-latest-posts__list wp-block-latest-posts">
+                        {% for recent_post in recent_posts %}
+                            <li>
+                                <a class="wp-block-latest-posts__post-title"
+                                   href="{% pageurl recent_post %}">{{ recent_post.post_title }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="block-4" class="widget clapat-sidebar-widget widget_block">
+                <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+                    <div class="wp-block-group__inner-container">
+                        <h5 class="wp-block-heading">Recent Comments</h5>
+                        <div class="no-comments wp-block-latest-comments">No comments to show.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--/Sidebar -->
             <div id="content-scroll">
                 <!-- Main -->
@@ -21,13 +75,14 @@
                     <!-- Hero Section -->
                     <div id="hero">
                         <div id="hero-styles">
-                            <div id="hero-caption"
-                                class="content-full-width content-full-width text-align-left block-title parallax-scroll-caption">
+                            <div id="hero-caption" class="content-full-width content-full-width text-align-left block-title parallax-scroll-caption">
                                 <div class="inner">
                                     <div class="hero-title-wrapper">
-                                    {% for block in page.hero_title %}
-                                        <h1 class="hero-title"><span>{{ block.value }}</span></h1>
-                                    {% endfor %}
+                                        <h1 class="hero-title">
+                                        {% for block in page.hero_title %}
+                                        <span>{{ block.value }}</span>
+                                        {% endfor %}
+                                        </h1>
                                     </div>
                                     <div class="hero-subtitle-wrapper">
                                         <h5 class="hero-subtitle">
@@ -63,17 +118,17 @@
                             <!-- Blog-Content-->
                             <div id="blog-effects" class="content-full-width" data-fx="1">
                                 <!-- Article -->
-                                {% for post in posts %}
-                                {% with post=post.specific %}
+                            {% for post in posts %}
+                            {% with post=post.specific %}
                                 <article  class="post type-post status-publish format-standard has-post-thumbnail hentry">
                                     <div class="article-wrap">
                                         <div class="hover-reveal">
                                             <div class="hover-reveal__inner">
                                                 <div class="hover-reveal__img">
                                                     <a class="ajax-link" href="{% pageurl post %}" data-type="page-transition">
-                                                    {% with post.main_image as main_image}
+                                                    {% with post.main_image as main_image %}
                                                     {% if main_image %}
-                                                        {% image main_image orginal alt="{{ main_image.caption }}" }
+                                                        {% image main_image original alt="{{ main_image.caption }}" %}
                                                     {% endif %}
                                                     {% endwith %}
                                                     </a>
@@ -86,13 +141,12 @@
                                         <div class="entry-meta-wrap">
                                             <div class="entry-meta entry-categories">
                                                 <ul class="post-categories">
-                                                {% for category in post.categories %}
+                                                    {% for category in categories %}
                                                     <li class="link">
-                                                        <a class="ajax-link" data-type="page-transition" href="{% url 'blog_category' category.slug %}">
-                                                            rel="category tag"><span
-                                                                data-hover="{{ category.name }}">{{ category.name }}</span></a>
+                                                        <a class="ajax-link" data-type="page-transition" href="{% url 'blog_category' category.slug %}" rel="category tag">
+                                                        <span data-hover="{{ category.name }}">{{ category.name }}</span></a>
                                                     </li>
-                                                {% endfor %}
+                                                    {% endfor %}
                                                 </ul>
                                             </div>
                                         </div>
@@ -100,7 +154,7 @@
                                             <ul class="entry-meta entry-date">
                                                 <li class="link">
                                                     <a class="ajax-link" href="{% pageurl post %}"><span
-                                                            data-hover="{{ post.pub_date }}">{{ post.pub_date }}</span></a>
+                                                            data-hover="{{ post.pub_date }}">{{ post.pub_date| date:"F d, Y" }}</span></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -121,8 +175,8 @@
                                         <div class="page-links"></div>
                                     </div>
                                 </article>
-                                {% endwith %}
-                                {% endfor %}
+                            {% endwith %}
+                        {% endfor %}
                                 <!--/Article -->
                             </div>
                             <!-- /Blog-Content -->

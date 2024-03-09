@@ -70,9 +70,9 @@
                                             <div class="hover-reveal__inner">
                                                 <div class="hover-reveal__img">
                                                     <a class="ajax-link" href="{% pageurl blog_category %}" data-type="page-transition">
-                                                    {% with blog_category.main_image as main_image}
+                                                    {% with blog_category.main_image as main_image %}
                                                     {% if main_image %}
-                                                        {% image main_image orginal alt="{{ main_image.caption }}" }
+                                                        {% image main_image original alt="{{ main_image.caption }}" %}
                                                     {% endif %}
                                                     {% endwith %}
                                                     </a>
@@ -85,11 +85,10 @@
                                         <div class="entry-meta-wrap">
                                             <div class="entry-meta entry-categories">
                                                 <ul class="post-categories">
-                                                {% for category in post.categories %}
+                                                {% for category in categories %}
                                                     <li class="link">
-                                                        <a class="ajax-link" data-type="page-transition" href="{% url 'blog_category' category.slug %}">
-                                                            rel="category tag"><span
-                                                                data-hover="{{ category.name }}">{{ category.name }}</span></a>
+                                                        <a class="ajax-link" data-type="page-transition" href="{% url 'blog_category' category.slug %}" rel="category tag">
+                                                        <span data-hover="{{ category.name }}">{{ category.name }}</span></a>
                                                     </li>
                                                 {% endfor %}
                                                 </ul>
@@ -120,7 +119,6 @@
                                         <div class="page-links"></div>
                                     </div>
                                 </article>
-                                {% endwith %}
                                 {% endfor %}
                                 <!--/Article -->
                             </div>

@@ -64,7 +64,7 @@ class BlogIndexPage(Page):
         use_json_field=True,
     )
 
-    hero_subtilte = models.CharField(
+    hero_subtitle = models.CharField(
 
         max_length=125,
         blank=False,
@@ -72,20 +72,38 @@ class BlogIndexPage(Page):
         default="Featured Stories"
     ) 
 
+    # return last posts published in the BlogIndexPage
+    def get_recent_posts(self):
+
+        max_count = 4
+
+        return BlogPage.objects.all().order_by('-first_published_at')[:max_count]
+
+
     def get_context(self, request):
 
         context = super().get_context(request)
 
-        posts = self.get_children().live().public().order_by("-last_published")
+        posts = self.get_children().live().public().order_by("-last_published_at")
 
-        context['posts'] = posts
+        categories = BlogCategory.objects.all()
+
+        recent_posts = self.get_recent_posts()
+
+        context = {
+
+            'posts': posts,
+            'categories': categories,
+            'recent_posts': recent_posts,
+
+        }
 
         return context
 
     content_panels = Page.content_panels + [
 
         FieldPanel('hero_title'),
-        FieldPanel('hero_subtilte'),
+        FieldPanel('hero_subtitle'),
     ]
 
 class BlogTagIndexPage(Page):
@@ -144,7 +162,16 @@ class BlogPage(Page):
         default="Image Above Heading"
     )
 
-    categories = ParentalManyToManyField("blog.BlogCategory", blank=True)
+    post_body = RichTextField(
+
+        blank=True,
+    )
+
+    categories = ParentalManyToManyField(
+
+        "blog.BlogCategory",
+        blank=True,
+    )
 
     tags = ClusterTaggableManager(
 
@@ -157,40 +184,34 @@ class BlogPage(Page):
         ordering = ["pub_date","post_title"]
 
     # Post Navigation Function for getting next or previous post
-    def next_post(self):
-        if self.get_next_siblings():
-            return self.get_next_sibling().url()
-        else: 
-            return self.get_siblings().first().url
+    # def next_post(self):
+    #     if self.get_next_siblings():
+    #         return self.get_next_sibling().url()
+    #     else: 
+    #         return self.get_siblings().first().url
 
-    def prev_post(self):
-        if get_prev_siblings():
-            return self.get_prev_sibling().url
-        else: 
-            return self.get_siblings().last().url
+    # def prev_post(self):
+    #     if get_prev_siblings():
+    #         return self.get_prev_sibling().url
+    #     else: 
+    #         return self.get_siblings().last().url
 
-    def get_recent_comments(self):
-
-        max_count = 4
-
-        return BlogComment.objects.all().order_by('-date')[:max_count]
-
+     # return last posts published in the BlogIndexPage
     def get_recent_posts(self):
 
         max_count = 4
-        return BlogPage.objects.all().order_by('-date')[:max_count]
+
+        return BlogPage.objects.all().order_by('-first_published_at')[:max_count]
 
     def get_context(self, request):
 
-        context = supuer(BlogPage, self).get_context(request)
+        context = super(BlogPage, self).get_context(request)
+
+        context["recent_posts"] = self.get_recent_posts()
 
         context["categories"]= BlogCategory.objects.all()
 
         context["tags"] = Tag.objects.all()
-
-        context['recent_posts'] = self.get_recent_posts()
-
-        context['recent_comments'] = self.get_recent_comments()
 
         return context
 
@@ -206,6 +227,7 @@ class BlogPage(Page):
             FieldPanel("post_title"),
             FieldPanel("main_image"),
             FieldPanel("main_header"),
+            FieldPanel("post_body"),
             InlinePanel("blog_page_gallery", label="Post Inline Images")
         ], heading="Post Contents"),
     ]

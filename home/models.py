@@ -10,6 +10,7 @@ from wagtail import blocks
 
 # from project
 from portfolio.models import PortfolioPage
+from blog.models import BlogPage, BlogCategory
 
 # Create your models here
 
@@ -36,12 +37,27 @@ class HomePage(Page):
                 max_count = 4
 
                 return PortfolioPage.objects.live().order_by('-date')[:max_count]  
+        
+        def get_recent_posts(self):
+
+                max_count = 4
+
+                return BlogPage.objects.all().order_by('-first_published_at')[:max_count]
+        
+        def get_post_category(self):
+
+                return BlogCategory.objects.all()
+
 
         def get_context(self, request):
 
                 context = super().get_context(request)
 
                 context['latest_portfolios'] = self.get_latest_portfolios()
+
+                context['recent_posts'] = self.get_recent_posts()
+
+                context['post_category'] = self.get_post_category()
 
                 return context
 

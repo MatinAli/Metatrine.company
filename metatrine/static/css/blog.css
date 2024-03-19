@@ -1301,7 +1301,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    cursor: url("../images/close.png"), e-resize;
+    /* cursor: url("../images/close.png"), e-resize; */
   }
   
   #sidebar {

@@ -187,9 +187,4 @@ class BusinessInsight(models.Model):
     panels = [
         FieldPanel('title'),
         FieldPanel('body'),
-<<<<<<< HEAD
     ]
-=======
-    ]
-
->>>>>>> 9a20156 (initial commit)

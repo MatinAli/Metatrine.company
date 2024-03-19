@@ -16,8 +16,6 @@
             {% include "_navbar.html" %}
             <!--/Header -->
             
-            
-            
             <!-- Content Scroll -->
             <div id="content-scroll">
             
@@ -95,7 +93,7 @@
                             
                             </div> 
                             <!--/Row -->
-                                              <!-- Row -->
+                            <!-- Row -->
                             <div class="content-row row_padding_left row_padding_right row_padding_bottom full light-section" data-bgcolor="#eee">
                             
                                 <hr class="animated-line has-animation">
@@ -116,31 +114,36 @@
                                 </div>
 
                             <div class="one_third">
-                                <h1 class="has-mask-fill">21</h1>
+                            {% for block in page.snap_shot %}
+                            {% if block.block_type == 'snap_shot' %}
+                                {% if forloop.counter == 1 %}
+                                <h1 class="has-mask-fill">{{ block.value.amount  }}</h1>
                                 <hr class="animated-line has-animation">
-                                <h6 class="has-mask">Projects Completed</h6>
-                                
+                                <h6 class="has-mask">{{ block.value.title }}</h6>
+                                {% elif forloop.counter == 2 %}
                                 <hr><hr><hr>
-                                
-                                <h1 class="has-mask-fill">03</h1>
+                                <h1 class="has-mask-fill">{{ block.value.amount }}</h1>
                                 <hr class="animated-line has-animation">
-                                <h6 class="has-mask">Years of Experience</h6>                                    
+                                <h6 class="has-mask">{{ block.value.title }}</h6>
                             </div>
-                            
+
                             <div class="one_third last">
-                                <h1 class="has-mask-fill">07</h1>
+                                {% elif forloop.counter == 3 %}
+                                <h1 class="has-mask-fill">{{ block.value.amount }}</h1>
                                 <hr class="animated-line has-animation">
-                                <h6 class="has-mask">Team Members</h6>
-                                
+                                <h6 class="has-mask">{{ block.value.title }}</h6>
+                                {% elif forloop.counter == 4 %}
                                 <hr><hr><hr>
-                                
-                                <h1 class="has-mask-fill">04</h1>
+                                <h1 class="has-mask-fill">{{ block.value.amount }}</h1>
                                 <hr class="animated-line has-animation">
-                                <h6 class="has-mask">Unity Network</h6>
-                            </div>
+                                <h6 class="has-mask">{{ block.value.title }}</h6>
+                                {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                            </div> 
+                            
                             </div> 
                             <!--/Row -->
-                            
                             
                             <!-- Row -->
                             <div class="content-row row_padding_bottom light-section" data-bgcolor="#eee">

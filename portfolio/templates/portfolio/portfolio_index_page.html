@@ -24,27 +24,15 @@
                     </div> 
                 </div> 
             </div>
-            
-            
-            
-            
             <!-- Filters Overlay -->
             <div id="filters-overlay">                
                 <div id="close-filters"></div>
                 <div class="outer">
                     <div class="inner">    
                         <ul id="filters">
-                            <li class="filters-timeline link"><a id="all" href="#" data-filter="*" class="active hide-ball">All</a></li>
-                            {% with categories=post.categories.all %}
-                            {% if categories %}
                             {% for category in categories %}
-                             <li class="filters-timeline link"><a href="#" data-filter="{{ category.name|slugify }}" class="hide-ball">{{ category.name }}</a></li>                                                       
-                             {% endfor %}
-                             {% endif %}
-                             {% endwith %}
-                            <!-- <li class="filters-timeline link"><a href="#" data-filter=".branding" class="hide-ball">Branding</a></li> 
-                            <li class="filters-timeline link"><a href="#" data-filter=".design" class="hide-ball">Design</a></li>
-                            <li class="filters-timeline link"><a href="#" data-filter=".video" class="hide-ball">Video</a></li> -->
+                             <li class="filters-timeline link"><a  id="{{ category.name }}" href="#" data-filter="{{ category.name }}" class="{% if category.name == 'All' %}active{% endif %} hide-ball">{{ category.name }}</a></li>                                                       
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -66,7 +54,7 @@
                                     <div class="hero-title-wrapper">
                                         <h1 class="hero-title">
                                         {% for block in page.hero_title %}
-                                            <span>{{ block.value }}</span>
+                                            <span>{% include_block block.value %}</span>
                                         {% endfor %}
                                     </h1>
                                 </div>
@@ -194,7 +182,7 @@
             <!--/Content Scroll -->
             
             
-            <div class="thumb-wrapper">
+            {% comment %} <div class="thumb-wrapper">
                 <div class="thumb-container">
                     <div class="thumb-page" data-src="images/01hero.jpg"></div>
                     <div class="thumb-page" data-src="images/02hero.jpg"></div>
@@ -205,7 +193,7 @@
                     <div class="thumb-page" data-src="images/07hero.jpg"></div>
                     <div class="thumb-page" data-src="images/08hero.jpg"></div>
                 </div>
-            </div>           
+            </div>            {% endcomment %}
             
             <div id="app"></div>
             

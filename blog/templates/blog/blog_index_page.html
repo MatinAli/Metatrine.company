@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% load static i18n wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
+{% load  i18n wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
+{% load static %}
 {% block content %}
 <main>
     <!-- Preloader -->
@@ -8,67 +9,65 @@
     <!--Cd-main-content -->
     <div class="cd-index cd-main-content">
         <!-- Page Content -->
-        <div id="page-content" class="post-template-content light-content" data-bgcolor="#171717">
+        <div id="page-content" class="blog-template-content light-content" data-bgcolor="#171717">
             <!-- Header -->
             {% include "_navbar.html" %}
             <!--/Header -->
-    <!-- Sidebar -->
-    <div id="black-fade"></div>
-    <div id="sidebar">
-        <div id="open-sidebar" class="link">
-            <i class="fa-solid fa-arrow-left"></i>
-        </div>
-        <div id="scrollbar"></div>
-        <div class="sidebar-content">
-            <div id="block-2"
-                 class="widget clapat-sidebar-widget widget_block widget_search">
-                <form role="search"
-                      method="get"
-                      action="{% url 'search' %}"
-                      class="wp-block-search__button-outside wp-block-search__text-button wp-block-search">
-                    <label class="wp-block-search__label" for="wp-block-search__input-1">Search</label>
-                    <div class="wp-block-search__inside-wrapper ">
-                        <input class="wp-block-search__input"
-                               id="wp-block-search__input-1"
-                               placeholder=""
-                               {% if search_query %}
-                               value="{{ search_query }}"
-                               {% endif %}
-                               type="search"
-                               name="s"
-                               required />
-                        <button aria-label="Search"
-                                class="wp-block-search__button wp-element-button"
-                                type="submit">Search</button>
+            <!-- Sidebar -->
+            <div id="black-fade"></div>
+            <div id="sidebar">
+                <div id="open-sidebar" class="link">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div id="scrollbar"></div>
+                <div class="sidebar-content">
+                    <div id="block-2"
+                         class="widget clapat-sidebar-widget widget_block widget_search">
+                        <form role="search"
+                              method="get"
+                              action="{% url 'search' %}"
+                              class="wp-block-search__button-outside wp-block-search__text-button wp-block-search">
+                            <label class="wp-block-search__label" for="wp-block-search__input-1">Search</label>
+                            <div class="wp-block-search__inside-wrapper ">
+                                <input class="wp-block-search__input"
+                                       id="wp-block-search__input-1"
+                                       placeholder=""
+                                       {% if search_query %}value="{{ search_query }}"{% endif %}
+                                       type="search"
+                                       name="query"
+                                       required />
+                                <button aria-label="Search"
+                                        class="wp-block-search__button wp-element-button"
+                                        type="submit">Search</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            <div id="block-3" class="widget clapat-sidebar-widget widget_block">
-                <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
-                    <div class="wp-block-group__inner-container">
-                        <h5 class="wp-block-heading">Recent Posts</h5>
-                        <ul class="wp-block-latest-posts__list wp-block-latest-posts">
-                        {% for recent_post in recent_posts %}
-                            <li>
-                                <a class="wp-block-latest-posts__post-title"
-                                   href="{% pageurl recent_post %}">{{ recent_post.post_title }}</a>
-                            </li>
-                        {% endfor %}
-                        </ul>
+                    <div id="block-3" class="widget clapat-sidebar-widget widget_block">
+                        <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+                            <div class="wp-block-group__inner-container">
+                                <h5 class="wp-block-heading">Recent Posts</h5>
+                                <ul class="wp-block-latest-posts__list wp-block-latest-posts">
+                                {% for recent_post in recent_posts %}
+                                    <li>
+                                        <a class="wp-block-latest-posts__post-title"
+                                           href="{% pageurl recent_post %}">{{ recent_post.title }}</a>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="block-4" class="widget clapat-sidebar-widget widget_block">
+                        <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+                            <div class="wp-block-group__inner-container">
+                                <h5 class="wp-block-heading">Recent Comments</h5>
+                                <div class="no-comments wp-block-latest-comments">No comments to show.</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="block-4" class="widget clapat-sidebar-widget widget_block">
-                <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
-                    <div class="wp-block-group__inner-container">
-                        <h5 class="wp-block-heading">Recent Comments</h5>
-                        <div class="no-comments wp-block-latest-comments">No comments to show.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/Sidebar -->
+            <!--/Sidebar -->
             <div id="content-scroll">
                 <!-- Main -->
                 <div id="main">
@@ -80,7 +79,7 @@
                                     <div class="hero-title-wrapper">
                                         <h1 class="hero-title">
                                         {% for block in page.hero_title %}
-                                        <span>{{ block.value }}</span>
+                                            <span>{% include_block block.value %}</span>
                                         {% endfor %}
                                         </h1>
                                     </div>
@@ -135,18 +134,22 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a class="post-title ajax-link has-mask-fill" href="{% pageurl post %}" data-type="page-transition">{{ post.post_title }}</a>
+                                        <a class="post-title ajax-link has-mask-fill" href="{% pageurl post %}" data-type="page-transition">{{ post.title }}</a>
                                     </div>
                                     <div class="article-content">
                                         <div class="entry-meta-wrap">
                                             <div class="entry-meta entry-categories">
                                                 <ul class="post-categories">
+                                                    {% with categories=post.categories.all %}
+                                                    {% if categories %}
                                                     {% for category in categories %}
                                                     <li class="link">
                                                         <a class="ajax-link" data-type="page-transition" href="{% url 'blog_category' category.slug %}" rel="category tag">
                                                         <span data-hover="{{ category.name }}">{{ category.name }}</span></a>
                                                     </li>
                                                     {% endfor %}
+                                                    {% endif %}
+                                                    {% endwith %}
                                                 </ul>
                                             </div>
                                         </div>

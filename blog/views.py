@@ -1,17 +1,25 @@
 from django.shortcuts import render, get_object_or_404
 <<<<<<< HEAD
+<<<<<<< HEAD
 from .models import BlogPage
 =======
 from .models import Comment, BlogPage
 from .forms import CommentForm
 >>>>>>> 9a20156 (initial commit)
+=======
+from .models import Comment, BlogPage
+from .forms import CommentForm
+>>>>>>> origin/master
 
 # Create your views here.
 def blog_category(request, category_slug):
     blog_categories = BlogPage.objects.filter(categories__slug=category_slug)
 <<<<<<< HEAD
+<<<<<<< HEAD
     return render(request, 'blog/blog_category.html', {'blog_categories': blog_categories })
 =======
+=======
+>>>>>>> origin/master
     return render(request, 'blog/blog_category.html', {'blog_categories': blog_categories })
 
 # def submit_comment(request, page_id):
@@ -55,4 +63,7 @@ def blog_post_navigation(request, blog_page_slug):
         'next_post': next_post,
         'previous_post': previous_post
     })
+<<<<<<< HEAD
 >>>>>>> 9a20156 (initial commit)
+=======
+>>>>>>> origin/master

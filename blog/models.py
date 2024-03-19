@@ -209,6 +209,8 @@ class BlogPage(RoutablePageMixin,Page):
             FieldPanel("post_body"),
             InlinePanel("blog_page_gallery", label="Post Inline Images")
         ], heading="Post Contents"),
+
+        InlinePanel("comments", label="Post Comments"),
     ]
 
 class BlogPageGalleryImage(Orderable):
@@ -239,3 +241,29 @@ class BlogPageGalleryImage(Orderable):
         FieldPanel("inline_image"),
         FieldPanel("image_caption"),
     ]
+
+class Comment(models.Model):
+
+    comment = models.TextField()
+    email = models.EmailField()
+    author = models.CharField(max_length=255)
+
+    panels = [
+        FieldPanel("comment"),
+        FieldPanel("email"),
+        FieldPanel("author"),
+    ]
+   
+    def __str__(self):
+        return f'Comment by {self.author} on {self.post.title}'
+    
+    class Meta:
+        abstract = True
+
+class BlogPageComments(Orderable, Comment):
+
+    page = ParentalKey(
+        "BlogPage",
+        related_name="comments",
+    )
+

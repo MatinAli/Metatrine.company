@@ -44,7 +44,11 @@ class AboutPage(Page):
 
         ])),
 
+<<<<<<< HEAD
     ],use_json_field= True, default=None, min_num=2, max_num=4,)
+=======
+    ], default=None, min_num=2, max_num=4)
+>>>>>>> 9a20156 (initial commit)
 
     # about-page title-moving-outer
     big_title = models.TextField(
@@ -187,4 +191,9 @@ class BusinessInsight(models.Model):
     panels = [
         FieldPanel('title'),
         FieldPanel('body'),
+<<<<<<< HEAD
     ]
+=======
+    ]
+
+>>>>>>> 9a20156 (initial commit)

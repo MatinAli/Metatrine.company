@@ -19,6 +19,7 @@ from wagtail.contrib.forms.models import (
     AbstractEmailForm,
     AbstractFormField,
 )
+from wagtail.contrib.routable_page.models import RoutablePageMixin, path, re_path
 # From other packages
 from taggit.models import TaggedItemBase, Tag 
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -38,6 +39,7 @@ class BlogCategory(models.Model):
     )
     
     panels = [
+
         FieldPanel("name"),
         FieldPanel("slug"),
     ]
@@ -58,7 +60,7 @@ class BlogIndexPage(Page):
     
     hero_title  = StreamField(
 
-        [('block', blocks.CharBlock())],
+        [('title', blocks.CharBlock())],
         null =True,
         blank =True,
         use_json_field=True,
@@ -86,17 +88,15 @@ class BlogIndexPage(Page):
 
         posts = self.get_children().live().public().order_by("-last_published_at")
 
+        context['posts'] = posts
+
         categories = BlogCategory.objects.all()
+
+        context['categories'] = categories
 
         recent_posts = self.get_recent_posts()
 
-        context = {
-
-            'posts': posts,
-            'categories': categories,
-            'recent_posts': recent_posts,
-
-        }
+        context['recent_posts'] = recent_posts
 
         return context
 
@@ -113,12 +113,18 @@ class BlogTagIndexPage(Page):
         # Filter by tag name
         tag = request.GET.get('tag')
 
-        posts = BlogPage.object.filter(tags__name=tag)
+        posts = BlogPage.objects.filter(tags__name=tag)
+
+        categories = BlogCategory.objects.all()
 
         # update template context
         context = super().get_context(request)
 
-        context['context'] = context
+        context = {
+            
+            "posts": posts,
+            "categories": categories,
+        }
 
         return context
 
@@ -131,7 +137,7 @@ class BlogTagPage(TaggedItemBase):
         on_delete=models.CASCADE,
     )
 
-class BlogPage(Page):
+class BlogPage(RoutablePageMixin,Page):
 
     pub_date = models.DateTimeField(
 
@@ -140,26 +146,12 @@ class BlogPage(Page):
         default=None,
     )
     
-    post_title = models.CharField(
-
-        max_length=250,
-        help_text="Post Title",
-        default=None,
-    ) 
-
     main_image = models.ForeignKey(
 
         'wagtailimages.Image',
         on_delete=models.PROTECT,
         related_name='post_banner_image',
         default=None,
-    )
-
-    main_header =models.CharField(
-
-        max_length=250,
-        help_text="Post Main Heading",
-        default="Image Above Heading"
     )
 
     post_body = RichTextField(
@@ -181,27 +173,15 @@ class BlogPage(Page):
 
     class Meta: 
 
-        ordering = ["pub_date","post_title"]
+        ordering = ["pub_date","title"]
 
-    # Post Navigation Function for getting next or previous post
-    # def next_post(self):
-    #     if self.get_next_siblings():
-    #         return self.get_next_sibling().url()
-    #     else: 
-    #         return self.get_siblings().first().url
-
-    # def prev_post(self):
-    #     if get_prev_siblings():
-    #         return self.get_prev_sibling().url
-    #     else: 
-    #         return self.get_siblings().last().url
-
-     # return last posts published in the BlogIndexPage
+    # return last posts published in the BlogIndexPage
     def get_recent_posts(self):
 
         max_count = 4
 
         return BlogPage.objects.all().order_by('-first_published_at')[:max_count]
+
 
     def get_context(self, request):
 
@@ -212,6 +192,7 @@ class BlogPage(Page):
         context["categories"]= BlogCategory.objects.all()
 
         context["tags"] = Tag.objects.all()
+
 
         return context
 
@@ -224,18 +205,19 @@ class BlogPage(Page):
         ], heading="Post Meta Data"),
 
         MultiFieldPanel([
-            FieldPanel("post_title"),
             FieldPanel("main_image"),
-            FieldPanel("main_header"),
             FieldPanel("post_body"),
             InlinePanel("blog_page_gallery", label="Post Inline Images")
         ], heading="Post Contents"),
+
+        InlinePanel("comments", label="Post Comments"),
     ]
 
 class BlogPageGalleryImage(Orderable):
+
     content_object = ParentalKey(
 
-        "BLogPage",
+        "BlogPage",
         related_name="blog_page_gallery",
         on_delete=models.CASCADE,
     )
@@ -259,3 +241,29 @@ class BlogPageGalleryImage(Orderable):
         FieldPanel("inline_image"),
         FieldPanel("image_caption"),
     ]
+
+class Comment(models.Model):
+
+    comment = models.TextField()
+    email = models.EmailField()
+    author = models.CharField(max_length=255)
+
+    panels = [
+        FieldPanel("comment"),
+        FieldPanel("email"),
+        FieldPanel("author"),
+    ]
+   
+    def __str__(self):
+        return f'Comment by {self.author} on {self.post.title}'
+    
+    class Meta:
+        abstract = True
+
+class BlogPageComments(Orderable, Comment):
+
+    page = ParentalKey(
+        "BlogPage",
+        related_name="comments",
+    )
+

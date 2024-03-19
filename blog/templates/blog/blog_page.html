@@ -2,6 +2,7 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load static %}
 {% block content %}
+
     <main>
         <!-- Preloader -->
         {% include "preloader.html" %}
@@ -54,7 +55,7 @@
                         {% for recent_post in recent_posts %}
                             <li>
                                 <a class="wp-block-latest-posts__post-title"
-                                   href="{% pageurl recent_post %}">{{ recent_post.post_title }}</a>
+                                   href="{% pageurl recent_post %}">{{ recent_post.title }}</a>
                             </li>
                         {% endfor %}
                         </ul>
@@ -87,10 +88,12 @@
                                             </li>
                                         </ul>
                                         <h1 class="hero-title">
-                                            <span>{{ page.post_title }}s</span>
+                                            <span>{{ page.title }}s</span>
                                         </h1>
                                         <div class="entry-meta entry-categories">
                                             <ul class="post-categories">
+                                            {% with categories=page.categories.all %}
+                                            {% if categories %}
                                             {% for category in categories %}
                                                 <li class="link">
                                                     <a class="ajax-link"
@@ -98,7 +101,9 @@
                                                        href="{% url 'blog_category' category.slug %}"
                                                        rel="category tag"><span data-hover="{{ category.name }}">{{ category.name }}</span></a>
                                                 </li>
-                                                {% endfor %}
+                                            {% endfor %}
+                                            {% endif %}
+                                            {% endwith %}
                                             </ul>
                                         </div>
                                     </div>
@@ -120,7 +125,6 @@
                                 <!-- Post Content -->
                                 <div id="post-content">
                                     <div class="post-max-width">
-                                        <h4 class="wp-block-heading">{{ page.main_header }}</h4>
 
                                         {{ page.post_body|richtext }}
                                         
@@ -147,8 +151,8 @@
                                             <li class="link">
                                                 <a class="ajax-link"
                                                    data-type="page-transition"
-                                                   href="{% slugurl 'tags' %}?tags={{ tag }}"
-                                                   rel="category tag"><span data-hover="{{ tag }}">{{ tag }}</span></a>
+                                                   href="{% slugurl 'tags' %}?tag={{ tag }}"
+                                                   rel="category tag"><span data-hover="{{ tag.name }}">{{ tag.name }}</span></a>
                                             </li>
                                             {% endfor %}
                                             {% endif %}
@@ -161,32 +165,31 @@
                                 <!-- Post Navigation -->
                                 <div id="post-navigation">
                                     <div class="post-max-width">
-                                        <div class="post-prev disabled">
+                                        <div class="post-prev {% if not previous_post %}disabled{% endif %}">
                                             <div class="post-prev-caption">Prev</div>
                                             <div class="post-next-title">
-                                            {% if page.prev_post %}
-                                                <a href="{{ page.prev_post }}"
+                                            {% if previous_post %}
+                                                <a href="{{ previous_post.url }}"
                                                    class="ajax-link hide-ball"
-                                                   data-type="page-transition"><span>Desert
-                                                Treasure Hunt</span></a>
+                                                   data-type="page-transition"><span>{{ previous_post.title }}</span></a>
                                             {% else %}
                                                 <span>No more posts</span>
                                             {% endif %}
                                             </div>
                                         </div>
 
-                                        <div class="post-next">
+                                        <div class="post-next {% if not next_post %}disabled{% endif %}">
                                             <div class="post-next-caption">Next</div>
                                             <div class="post-next-title">
-                                            {% if page.next_post %}
-                                                <a href="{{ page.next_post }}"
+                                            {% if next_post %}
+                                                <a href="{{ next_post.url }}"
                                                    class="ajax-link hide-ball"
-                                                   data-type="page-transition"><span>Desert
-                                                Treasure Hunt</span></a>
+                                                   data-type="page-transition"><span>{{ next_post.title }}</span></a>
                                             {% endif %}
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                                 <!--/Post Navigation -->
 
@@ -213,42 +216,13 @@
                                                     <li>Leave a comment</li>
                                                 </ul>
                                             </div>
-                                            <small><a rel="nofollow"
-   id="cancel-comment-reply-link"
-   href="/wordpress/harington/2022/03/14/blue-ocean-waves/#respond"
-   style="display:none"><span class="cancel-reply">Cancel
-                                            Reply</span></a></small>
+                                            <small><a rel="nofollow" id="cancel-comment-reply-link" href="#" style="display:none"><span class="cancel-reply">Cancel eReply</span></a></small>
                                         </div>
 
+                                        
                                         {% comment %} Blog Page Contact Form {% endcomment %}
-                                        <form action="" method="post" id="commentsform" class="comment-form">
-                                            <div class="message-box hide-ball ">
-                                                <textarea id="comment"
-                                                          name="comment"
-                                                          onfocus="#" 
-                                                          onblur="#">Comment</textarea>
-                                                <label class="input_label slow"></label> 
-                                            </div>
-                                            <div class="name-box hide-ball">
-                                                <input name="author"
-                                                       type="text"
-                                                       id="author"
-                                                       size="30"
-                                                       onfocus="#"
-                                                       onblur="#"
-                                                       value='Name'>
-                                                <label class="input_label"></label>
-                                            </div>
-                                            <div class="email-box hide-ball">
-                                                <input name="email"
-                                                       type="text"
-                                                       id="email"
-                                                       size="30"
-                                                       onfocus="#"
-                                                       onblur="#"
-                                                       value='E-mail'>
-                                                <label class="input_label"></label>
-                                            </div>
+                                        <form action="#" method="post" id="commentsform" class="comment-form">
+                                        
                                             <p class="comment-form-cookies-consent">
                                                 <input id="wp-comment-cookies-consent"
                                                        name="wp-comment-cookies-consent"

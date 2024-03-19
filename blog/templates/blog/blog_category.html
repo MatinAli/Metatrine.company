@@ -79,7 +79,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a class="post-title ajax-link has-mask-fill" href="{% pageurl blog_category %}" data-type="page-transition">{{ blog_category.post_title }}</a>
+                                        <a class="post-title ajax-link has-mask-fill" href="{% pageurl blog_category %}" data-type="page-transition">{{ blog_category.title }}</a>
                                     </div>
                                     <div class="article-content">
                                         <div class="entry-meta-wrap">
@@ -98,7 +98,7 @@
                                             <ul class="entry-meta entry-date">
                                                 <li class="link">
                                                     <a class="ajax-link" href="{% pageurl blog_category %}"><span
-                                                            data-hover="{{ blog_category.pub_date }}">{{ blog_category.pub_date }}</span></a>
+                                                            data-hover="{{ blog_category.pub_date }}">{{ blog_category.pub_date| date:"F d, Y" }}</span></a>
                                                 </li>
                                             </ul>
                                         </div>

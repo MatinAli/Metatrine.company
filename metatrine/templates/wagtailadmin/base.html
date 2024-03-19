@@ -1,0 +1,13 @@
+{% extends "wagtailadmin/base.html" %}
+{% load static %}
+{% block branding_logo %}
+    <img class="white-logo"
+    src="{% static 'images/logo-white.png' %}"
+    height=""
+    width="120"
+    alt="Metatrine Logo" />
+{% endblock %}
+{% block branding_title %}Metatrine Company{% endblock %}
+{% block branding_favicon %}
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+{% endblock %}

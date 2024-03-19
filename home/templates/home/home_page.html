@@ -1,5 +1,5 @@
 {% extends "base.html" %} 
-{% load static i18n wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
+{% load  i18n wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
 {% load static %} 
 {% block content %}
 <main>
@@ -174,8 +174,8 @@
               <!--/Row -->
               <!-- Row -->
               <div class="content-row row_padding_left row_padding_right full light-section" data-bgcolor="#eee">
-              {% for post in recent_posts %}
-              {% with post=post.specific %}
+            {% for post in recent_posts %}
+            {% with post=post.specific %}
                 <article class="post">
                   <div class="article-wrap">
                     <div class="hover-reveal">
@@ -190,18 +190,22 @@
                       </div>
                     </div>
                     <a class="post-title ajax-link has-mask-fill" href="{% pageurl post %}" data-type="page-transition"
-                      data-color="#000">{{ post.post_title }}</a>
+                      data-color="#000">{{ post.title }}</a>
                   </div>
                   <div class="article-content">
                     <div class="entry-meta-wrap">
                       <div class="entry-meta entry-categories">
                         <ul class="post-categories">
+                        {% with post_category=post.categories.all %}
+                        {% if post_category %}
                         {% for category in post_category %}
                           <li class="link">
                             <a class="ajax-link" href="{% url 'blog_category' category.slug %}" data-type="page-transition"><span
                                 data-hover="{{ category.name }}">{{ category.name }}</span></a>
                           </li>
-                          {% endfor %}
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
                         </ul>
                       </div>
                     </div>
@@ -215,8 +219,8 @@
                     </div>
                   </div>
                 </article>
-                {% endwith %}
-                {% endfor %}
+              {% endwith %}
+              {% endfor %}
                 <div class="two_fifth">
                   <hr />
                   <hr />

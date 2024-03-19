@@ -1923,7 +1923,7 @@ jQuery(function ($) {
 			$(".flexnav").flexNav({ 'animationSpeed' : 250 });
 			
 			// Project Share	
-			var social_links_share = ["facebook", "twitter", "pinterest"];
+			var social_links_share = ["facebook", "linkedin"];
 			if( (typeof ClapatThemeOptions != 'undefined') && ClapatThemeOptions.share_social_network_list ){
 				
 				// we assume the social networks string is comma separated

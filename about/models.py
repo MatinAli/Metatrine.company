@@ -12,91 +12,149 @@ from wagtail import blocks
 
 # Create your models here.
 class AboutPage(Page):
-    # template = 'about/about_page.html'
+
+    template = 'about/about_page.html'
 
     services = RichTextField(max_length=600)
 
-    services_item = StreamField([('block', blocks.CharBlock())],
-                    null = True, blank = True, use_json_field= True)
+    services_item = StreamField(
 
-    hero_title  = StreamField([('block', blocks.CharBlock())],
-                  null = True, blank = True, use_json_field= True)
+        [('block', blocks.CharBlock())],
+        null = True,
+        blank = True,
+        use_json_field= True
+    )
+
+    hero_title  = StreamField(
+
+        [('block', blocks.CharBlock())],
+        null = True,
+        blank = True,
+        use_json_field= True
+    )
+
+    # About-Page Agency snapshot section
+    snap_shot = StreamField([
+
+        ('snap_shot', blocks.StructBlock([
+
+        ('title', blocks.CharBlock()),
+
+        ('amount', blocks.IntegerBlock()),
+
+        ])),
+
+    ], default=None, min_num=2, max_num=4)
 
     # about-page title-moving-outer
-    big_title = models.TextField( blank= True, null = True,
-                max_length=250,
-                verbose_name="Title Moving Outer" )
+    big_title = models.TextField(
 
-    content_row = models.CharField(max_length=10000, blank=True, null=True,)
+        blank= True,
+        null = True,
+        max_length=250,
+        verbose_name="Title Moving Outer"
+     )
+
+    content_row = models.CharField(
+
+        max_length=10000, 
+        blank=True, 
+        null=True,
+    )
 
     
     content_panels = Page.content_panels + [
+
         FieldPanel('hero_title'),
         FieldPanel('services'),
         FieldPanel('services_item'),
         FieldPanel('big_title'),
+        FieldPanel('snap_shot'),
         InlinePanel('faq', label="Frequently Asked Questions"),
         InlinePanel('ourteam', label="Our Team"),
         InlinePanel('customers', label="Our Customers"),
         FieldPanel('content_row'),
         InlinePanel('business_insight', label="Business Insights"),
-        InlinePanel('snap_shot', label="Snap Shots"),
     ]
 
 class AboutPageFAQ(models.Model):
 
-    page = ParentalKey(AboutPage, related_name='faq')
+    page = ParentalKey(
+        AboutPage,
+        related_name='faq',
+    )
 
-    overview_title = models.CharField(max_length=300)
+    overview_title = models.CharField(
 
-    overview_detail = models.CharField(max_length=1000)
+        max_length=300,
+    )
+
+    overview_detail = models.CharField(
+
+        max_length=1000,
+    )
 
     panels = [
+
         FieldPanel('overview_title'),
         FieldPanel('overview_detail'),
     ]
 
 class OurTeam(models.Model):
 
-    page = ParentalKey(AboutPage, 
-           null=True,
-           blank=True,
-           on_delete=models.SET_NULL,
-           related_name='ourteam'
+    page = ParentalKey(
+
+        AboutPage, 
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='ourteam'
     )
 
-    name = models.CharField(max_length=120)
+    name = models.CharField(
+
+        max_length=120,
+    )
     
-    position = models.CharField(max_length= 200)
+    position = models.CharField(
+
+        max_length= 200,
+    )
 
     image = models.ForeignKey(
-            Image,
-            on_delete=models.CASCADE,
-            related_name='+',
-            null=True,
-            blank=True
+
+        Image,
+        on_delete=models.CASCADE,
+        related_name='+',
+        null=True,
+        blank=True
     )
 
     panels =[
+
         FieldPanel('name'),
         FieldPanel('position'),
         FieldPanel('image'),
     ]
 
     def __str__(self):
+
         return self.name
 
 class Customers(models.Model):
 
-    page = ParentalKey(AboutPage, 
-           null=True,
-           blank=True,
-           on_delete=models.SET_NULL,
-           related_name='customers')
+    page = ParentalKey(
+
+        AboutPage, 
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='customers')
 
     link = models.URLField(max_length=200)
 
     image = models.ForeignKey(
+
             Image,
             on_delete=models.CASCADE,
             related_name='+',
@@ -111,28 +169,6 @@ class Customers(models.Model):
 
     def __str__(self):
         return self.link 
-
-# About-Page Agency snapshot section
-class SnapShot(models.Model):
-
-    page = ParentalKey(AboutPage, 
-           null=True,
-           blank=True,
-           on_delete=models.SET_NULL,
-           related_name='snap_shot')
-
-
-    row_title = models.CharField(max_length= 100, blank=True, null=True)
-    
-    snapshot_title = models.CharField(max_length= 100, blank=True, null=True)
-
-    count_field = models.IntegerField(null=True, blank=True, )
-
-    panels = [
-        FieldPanel('row_title'),
-        FieldPanel('snapshot_title'),
-        FieldPanel('count_field')
-    ]
 
 # The Challenge and The Approch part
 class BusinessInsight(models.Model):
@@ -152,5 +188,4 @@ class BusinessInsight(models.Model):
         FieldPanel('title'),
         FieldPanel('body'),
     ]
-
 

@@ -17,21 +17,25 @@ from blog.models import BlogPage, BlogCategory
 class HomePage(Page):
 
         hero_title = StreamField(
+
                 [('title', blocks.CharBlock())],
-                null = True, blank = True,
+                null = True,
+                blank = True,
                 use_json_field= True
         )
 
         slogan = models.CharField(blank= True, max_length=2000)
 
         call_to_action = StreamField(
+
                 [('items', blocks.CharBlock())],
                 null = True, blank = True,
-                use_json_field= True
+                use_json_field= True,
         )
 
         # portfolio below section 
         content_row = models.CharField(max_length=10000, blank=True, null=True,)
+
         def get_latest_portfolios(self):
 
                 max_count = 4
@@ -62,6 +66,7 @@ class HomePage(Page):
                 return context
 
         content_panels = Page.content_panels + [
+
             FieldPanel('hero_title'),
             FieldPanel('slogan'),
             FieldPanel('content_row'),

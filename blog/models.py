@@ -209,8 +209,6 @@ class BlogPage(RoutablePageMixin,Page):
             FieldPanel("post_body"),
             InlinePanel("blog_page_gallery", label="Post Inline Images")
         ], heading="Post Contents"),
-
-        InlinePanel("comments", label="Post Comments"),
     ]
 
 class BlogPageGalleryImage(Orderable):

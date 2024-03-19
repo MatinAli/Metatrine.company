@@ -44,7 +44,7 @@ class AboutPage(Page):
 
         ])),
 
-    ], default=None, min_num=2, max_num=4)
+    ],use_json_field= True, default=None, min_num=2, max_num=4,)
 
     # about-page title-moving-outer
     big_title = models.TextField(

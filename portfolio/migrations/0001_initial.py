@@ -10,10 +10,10 @@ import wagtail.fields
 class Migration(migrations.Migration):
     initial = True
 
-    dependencies = [
-        ("wagtailimages", "0025_alter_image_file_alter_rendition_file"),
-        ("wagtailcore", "0092_query_searchpromotion_querydailyhits"),
-    ]
+    # dependencies = [
+    #     ("wagtailimages", "0025_alter_image_file_alter_rendition_file"),
+    #     ("wagtailcore", "0092_query_searchpromotion_querydailyhits"),
+    # ]
 
     operations = [
         migrations.CreateModel(

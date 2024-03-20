@@ -12,13 +12,13 @@ import wagtail.fields
 class Migration(migrations.Migration):
     initial = True
 
-    dependencies = [
-        ("wagtailimages", "0025_alter_image_file_alter_rendition_file"),
-        # (
-        #     "taggit",
-        #     "0006_rename_taggeditem_content_type_object_id_taggit_tagg_content_8fc721_idx",),
-        ("wagtailcore", "0092_query_searchpromotion_querydailyhits"),
-    ]
+    # dependencies = [
+    #     ("wagtailimages", "0025_alter_image_file_alter_rendition_file"),
+    #     # (
+    #     #     "taggit",
+    #     #     "0006_rename_taggeditem_content_type_object_id_taggit_tagg_content_8fc721_idx",),
+    #     ("wagtailcore", "0092_query_searchpromotion_querydailyhits"),
+    # ]
 
     operations = [
         migrations.CreateModel(
